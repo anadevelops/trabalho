@@ -2,9 +2,10 @@ from abc import ABC, abstractmethod
 
 class Produto(ABC):
     @abstractmethod
-    def __init__(self, custo: int, preco: float,
+    def __init__(self, nome: str, custo: int, preco: float,
                  percent_comissao: float, codigo: int, veget: bool,
                  vegan: bool, gluten: bool, lactose: bool):
+        self.__nome = nome
         self.__custo = custo
         self.__preco = preco
         self.__percent_comissao = percent_comissao
@@ -14,6 +15,12 @@ class Produto(ABC):
         self.__gluten = gluten
         self.__lactose = lactose
 
+        self.__suprimentos = []
+
+    @property
+    def nome(self):
+        return self.__nome
+        
     @property
     def custo(self):
         return self.__custo
@@ -45,6 +52,10 @@ class Produto(ABC):
     @property
     def lactose(self):
         return self.__lactose
+
+    @nome.setter
+    def nome(self, nome):
+        self.__nome = nome
 
     @custo.setter
     def custo(self, custo):
