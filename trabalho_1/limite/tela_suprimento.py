@@ -27,5 +27,4 @@ class TelaSuprimento():
     def seleciona_suprimento(self):
         codigo = input("Código do suprimento que deseja selecionar: ")
         return codigo
-    
-    def criar_suprimento(self):
+
