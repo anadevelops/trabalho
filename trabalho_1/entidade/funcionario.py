@@ -1,5 +1,5 @@
-from pessoa import *
-from endereco import *
+from pessoa import Pessoa
+from endereco import Endereco
 
 
 class Funcionario(Pessoa):

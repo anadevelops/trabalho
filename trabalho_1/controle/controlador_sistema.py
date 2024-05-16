@@ -1,14 +1,16 @@
-from controle.controlador_cliente import ControladorCliente
-from controle.controlador_funcionario import ControladorFuncionario
-from controle.controle_suprimento import ControladorSuprimento
-from limite.tela_sistema import TelaSistema
+from trabalho_1.controle.controlador_cliente import ControladorCliente
+from trabalho_1.controle.controlador_funcionario import ControladorFuncionario
+from trabalho_1.controle.controlador_suprimento import ControladorSuprimento
+from trabalho_1.limite.tela_sistema import TelaSistema
 
 
 class ControladorSistema:
     def __init__(self):
-        self.__controlador_cliente = ControladorCliente()
-        self.__controlador_funcionario = ControladorFuncionario()
-        self.__controlador_suprimento = ControladorSuprimento
+        self.__controlador_cliente = ControladorCliente(self)
+        self.__controlador_funcionario = ControladorFuncionario(self)
+        self.__controlador_suprimento = ControladorSuprimento(self)
+        self.__controlador_bebida = ControladorBebida(self)
+        self.__controlador_refeicoes = ControladorRefeicoes(self)
         self.__tela_sistema = TelaSistema()
 
         @property

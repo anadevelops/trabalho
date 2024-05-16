@@ -32,7 +32,7 @@ class ControladorFuncionario:
                                             'cpf': func.cpf,
                                             'salario': func.salario,
                                             'funcao': func.funcao,
-                                            'endereco': func.endereco})
+                                            'endereco': func.endereco.rua + func.endereco.bairro + func.endereco.cidade})
 
     def altera_funcionario(self):
         self.lista_funcionarios()
