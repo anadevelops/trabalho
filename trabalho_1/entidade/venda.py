@@ -4,8 +4,9 @@ from trabalho_1.entidade.funcionario import Funcionario
 from cliente import Cliente
 
 class Venda:
-    def __init__(self, codigo: int, cliente: Cliente, funcionario: Funcionario, refeicao: Refeicao, bebida: Bebida):
-        self.__codigo = codigo
+    def __init__(self, cliente: Cliente, funcionario: Funcionario, refeicao: Refeicao, bebida: Bebida):
+        self.__codigo = 0
+        self.__aberta = True
         self.__cliente = cliente
         self.__funcionario = funcionario
         self.__refeicoes = []
@@ -20,6 +21,10 @@ class Venda:
     @property
     def codigo(self):
         return self.__codigo
+
+    @property
+    def aberta(self):
+        return self.__aberta
 
     @property
     def cliente(self):
@@ -40,6 +45,10 @@ class Venda:
     @codigo.setter
     def codigo(self, cod):
         self.__codigo = cod
+
+    @aberta.setter
+    def aberta(self, ab):
+        self.__aberta = ab
 
     @cliente.setter
     def cliente(self, cli):
