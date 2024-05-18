@@ -20,13 +20,22 @@ class ControladorBebida():
 
     def incluir_bebida(self):
         dados_bebida = self.__tela_bebida.pega_dados_bebida()
-        bebida = Bebida(dados_bebida["nome"], dados_bebida["preco"],
-                         dados_bebida["percent_comissao"], dados_bebida["codigo"], 
-                         dados_bebida["veget"], dados_bebida["vegan"], 
-                         dados_bebida["gluten"], dados_bebida["lactose"],
-                         dados_bebida['ingrediente1'], dados_bebida['ingrediente2'],
-                         dados_bebida['ingrediente3'], dados_bebida["grau_alcoolico"])
-        self.__refeicoes.append(bebida)
+
+        ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(dados_bebida['ingrediente1'])
+        ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(dados_bebida['ingrediente2'])
+        ing3 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(dados_bebida['ingrediente3'])
+
+        if ing1 is not None and ing2 is not None and ing3 is not None:
+            nova_bebida = Bebida(dados_bebida["nome"], dados_bebida["preco"],
+                            dados_bebida["percent_comissao"],
+                            #dados_bebida["veget"], dados_bebida["vegan"], 
+                            #dados_bebida["gluten"], dados_bebida["lactose"],
+                            ing1, ing2,
+                            ing3, dados_bebida["grau_alcoolico"])
+            nova_bebida.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_bebida()
+            self.__refeicoes.append(nova_bebida)
+        else:
+            self.__tela_bebida.mostra_mensagem("ATENCAO: Ingrediente não existente")
 
     def alterar_bebida(self):
         self.lista_refeicoes()
