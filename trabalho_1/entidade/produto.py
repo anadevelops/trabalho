@@ -1,12 +1,13 @@
 from abc import ABC, abstractmethod
+from suprimento import Suprimento
 
 class Produto(ABC):
     @abstractmethod
-    def __init__(self, nome: str, custo: int, preco: float,
+    def __init__(self, nome: str, preco: float,
                  percent_comissao: float, codigo: int, veget: bool,
-                 vegan: bool, gluten: bool, lactose: bool):
+                 vegan: bool, gluten: bool, lactose: bool,
+                 ingrediente1: Suprimento, ingrediente2: Suprimento, ingrediente3: Suprimento):
         self.__nome = nome
-        self.__custo = custo
         self.__preco = preco
         self.__percent_comissao = percent_comissao
         self.__codigo = codigo
@@ -16,14 +17,18 @@ class Produto(ABC):
         self.__lactose = lactose
 
         self.__suprimentos = []
+        self.__custo = 0
+
+        self.__suprimentos.append(ingrediente1)
+        self.__suprimentos.append(ingrediente2)
+        self.__suprimentos.append(ingrediente3)
+
+        for suprimento in self.__suprimentos:
+            self.__custo += suprimento.preco
 
     @property
     def nome(self):
         return self.__nome
-        
-    @property
-    def custo(self):
-        return self.__custo
 
     @property
     def preco(self):
@@ -57,10 +62,6 @@ class Produto(ABC):
     def nome(self, nome):
         self.__nome = nome
 
-    @custo.setter
-    def custo(self, custo):
-        self.__custo = custo
-
     @preco.setter
     def preco(self, preco):
         self.__preco = preco
@@ -88,3 +89,6 @@ class Produto(ABC):
     @lactose.setter
     def lactose(self, lactose):
         self.__lactose = lactose
+
+    def calcula_custo(self):
+        return self.__custo
