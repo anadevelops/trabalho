@@ -1,5 +1,5 @@
-from pessoa import Pessoa
-from endereco import Endereco
+from trabalho_1.entidade.pessoa import Pessoa
+from trabalho_1.entidade.endereco import Endereco
 
 
 class Funcionario(Pessoa):

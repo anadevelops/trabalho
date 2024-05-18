@@ -1,4 +1,4 @@
-from pessoa import *
+from trabalho_1.entidade.pessoa import Pessoa
 
 
 class Cliente(Pessoa):

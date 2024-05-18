@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from suprimento import Suprimento
+from trabalho_1.entidade.suprimento import Suprimento
 
 class Produto(ABC):
     @abstractmethod

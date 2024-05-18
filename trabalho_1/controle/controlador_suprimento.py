@@ -1,7 +1,7 @@
-from entidade.suprimento import Suprimento
-from limite.tela_suprimento import TelaSuprimento
+from trabalho_1.entidade.suprimento import Suprimento
+from trabalho_1.limite.tela_suprimento import TelaSuprimento
 
-class ControleSuprimento():
+class ControladorSuprimento():
 
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema

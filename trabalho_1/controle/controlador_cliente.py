@@ -1,6 +1,10 @@
 from trabalho_1.entidade.cliente import Cliente
 from trabalho_1.limite.tela_cliente import TelaCliente
 
+import sys, os
+
+os.path.abspath(os.curdir)
+
 class ControladorCliente:
     def __init__(self, controlador_sistema):
         self.__clientes = []
@@ -14,7 +18,7 @@ class ControladorCliente:
         return None
 
     def add_cliente(self):
-        dados_cliente = self.__tela_cliente.pega_dados_funcionario()
+        dados_cliente = self.__tela_cliente.pega_dados_cliente()
         new_cli = Cliente(dados_cliente['nome'],
                                 dados_cliente['cpf'],
                                 dados_cliente['codigo'])

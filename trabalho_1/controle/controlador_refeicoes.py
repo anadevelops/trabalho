@@ -1,10 +1,11 @@
 #from limite.tela_amigo import TelaAmigo
-from entidade.refeicao import Refeicao
+from trabalho_1.entidade.refeicao import Refeicao
 
 class ControladorRefeicao():
 
     def __init__(self, controlador_sistema):
         self.__refeicoes = []
+        self.__controlador_sistema = controlador_sistema
         #self.__tela_refeicao = TelaRefeicao()
 
     def pega_refeicao_por_codigo(self, codigo: int):

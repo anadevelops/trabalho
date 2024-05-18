@@ -1,5 +1,5 @@
-from produto import Produto
-from suprimento import Suprimento
+from trabalho_1.entidade.produto import Produto
+from trabalho_1.entidade.suprimento import Suprimento
 
 class Bebida(Produto):
     def __init__(self, nome: str, preco: float,
