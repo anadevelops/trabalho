@@ -43,3 +43,7 @@ class Funcionario(Pessoa):
     @num_vendas.setter
     def num_vendas(self, vendas):
         self.__num_vendas = vendas
+
+    @endereco.setter
+    def endereco(self, rua, bairro, cidade):
+        self.__endereco = Endereco(rua, bairro, cidade)

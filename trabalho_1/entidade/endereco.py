@@ -18,15 +18,12 @@ class Endereco:
 
     @rua.setter
     def rua(self, rua):
-        if isinstance(rua, str):
-            self.__rua = rua
+        self.__rua = rua
     
     @bairro.setter
     def bairro(self, bairro):
-        if isinstance(bairro, str):
-            self.__bairro = bairro
+        self.__bairro = bairro
 
     @cidade.setter
     def cidade(self, cidade):
-        if isinstance(cidade, str):
-            self.__cidade = cidade
+        self.__cidade = cidade

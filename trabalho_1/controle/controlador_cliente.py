@@ -48,7 +48,6 @@ class ControladorCliente:
             novos_dados_cli = self.__tela_cliente.pega_dados_cliente()
             cli.nome = novos_dados_cli['nome']
             cli.cpf = novos_dados_cli['cpf']
-            cli.codigo = novos_dados_cli['codigo']
             self.lista_clientes()
         else:
             return self.__tela_cliente.mostra_msg('Cliente inexistente')

@@ -15,7 +15,7 @@ class TelaSuprimento():
         print('---------- DADOS DO SUPRIMENTO -----------')
         nome = input('Nome do suprimento: ')
         qtd = int(input('Quantidade do suprimento: '))
-        preco = int(input('Preço do suprimento: '))
+        preco = float(input('Preço do suprimento: '))
 
         return {"nome": nome, "qtd": qtd, "preco": preco}
     

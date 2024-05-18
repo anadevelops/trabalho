@@ -6,28 +6,41 @@ class TelaFuncionario:
         print('2 - Atualizar funcionário')
         print('3 - Listar funcionários')
         print('4 - Excluir funcionário')
+        print('5 - Calcular comissão')
         print('0 - Retornar')
-
-        opcao = int(input('Escolha a opção: '))
-        return opcao
+        
+        try:
+            opcao = int(input('Escolha a opção: '))
+        except ValueError:
+            self.mostra_msg('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
+        #except Exception as opcao not in range(0,6):
+            #self.mostra_msg('Opção inexistente')
+        else:
+            return opcao
 
     def pega_dados_funcionario(self):
         print('---------- DADOS FUNCIONÁRIO ----------')
-        nome = str(input('Nome: '))
-        cpf = int(input('CPF: '))
-        funcao = str(input('Função: '))
-        salario = float(input('Salário: '))
-        rua = str(input('Rua: '))
-        bairro = str(input('Bairro: '))
-        cidade = str(input('Cidade: '))
-
-        return {'nome': nome,
-                'cpf': cpf,
-                'salario': salario,
-                'funcao': funcao,
-                'rua': rua,
-                'bairro': bairro,
-                'cidade': cidade}
+        while True:
+            try:
+                nome = str(input('Nome: '))
+                cpf = int(input('CPF: '))
+                funcao = str(input('Função: '))
+                salario = float(input('Salário: '))
+                rua = str(input('Rua: '))
+                bairro = str(input('Bairro: '))
+                cidade = str(input('Cidade: '))
+    
+            except ValueError:
+                self.mostra_msg('Formato de informação está incorreto, tente novamente')
+        
+            else:
+                return {'nome': nome,
+                        'cpf': cpf,
+                        'salario': salario,
+                        'funcao': funcao,
+                        'rua': rua,
+                        'bairro': bairro,
+                        'cidade': cidade}
 
     def mostra_funcionario(self, dados_funcionario):
         print('Nome do funcionário: ', dados_funcionario['nome'])

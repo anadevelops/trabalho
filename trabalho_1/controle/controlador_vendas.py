@@ -19,6 +19,10 @@ class ControladorVendas:
                 return venda
         return None
 
+    @property
+    def vendas(self):
+      return [venda for venda in self.__vendas]
+
     def incluir_venda(self):
         self.__controlador_sistema.controlador_funcionario.lista_funcionarios()
         self.__controlador_sistema.controlador_cliente.lista_clientes()

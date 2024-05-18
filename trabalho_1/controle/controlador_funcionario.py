@@ -3,6 +3,7 @@ import sys,os
 sys.path.insert(0,os.path.abspath(os.curdir))
 
 from trabalho_1.entidade.funcionario import Funcionario
+from trabalho_1.entidade.endereco import Endereco
 from trabalho_1.limite.tela_funcionario import TelaFuncionario
 
 
@@ -51,7 +52,7 @@ class ControladorFuncionario:
             func.nome = novos_dados_func['nome']
             func.cpf = novos_dados_func['cpf']
             func.salario = novos_dados_func['salario']
-            func.endereco = novos_dados_func['rua'] + novos_dados_func['bairro'] + novos_dados_func['cidade']
+            func.endereco = Endereco(novos_dados_func['rua'], novos_dados_func['bairro'], novos_dados_func['cidade'])
             self.lista_funcionarios()
         else:
             return self.__tela_funcionario.mostra_msg('Funcionário inexistente')
@@ -66,6 +67,25 @@ class ControladorFuncionario:
             self.lista_funcionarios()
         else:
             self.__tela_funcionario.mostra_msg('Funcionário inexistente')
+
+    def calcula_comissao(self):
+        self.lista_funcionarios()
+        cpf_func = self.__tela_funcionario.seleciona_funcionario()
+        func = self.pega_funcionario_p_cpf(cpf_func)
+        vendas = self.__controlador_sistema.controlador_vendas.vendas
+
+        if func is not None:
+            for venda in vendas:
+                if venda.funcionario == func:
+                    for refeicao in venda.refeicoes:
+                        comissao = func.salario * refeicao.percent_comissao
+                        soma_comissao += comissao
+                    for bebida in venda.bebidas:
+                        comissao = func.salario * bebida.percent_comissao
+                        soma_comissao += comissao
+        func.salario = func.salario + soma_comissao
+        return self.__tela_funcionario.mostra_funcionario(func)
+
     
     def retornar(self):
         self.__controlador_sistema.abre_tela()
@@ -75,6 +95,7 @@ class ControladorFuncionario:
                         2: self.altera_funcionario,
                         3: self.lista_funcionarios,
                         4: self.del_funcionario,
+                        5: self.calcula_comissao,
                         0: self.retornar}
         
         continua = True
