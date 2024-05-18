@@ -34,7 +34,7 @@ class TelaFuncionario:
         print('CPF do funcionário: ', dados_funcionario['cpf'])
         print('Salário do funcionário: ', dados_funcionario['salario'])
         print('Função do funcionário: ', dados_funcionario['funcao'])
-        print('Endereço do funcionário: ', dados_funcionario['endereço'])
+        print('Endereço do funcionário: ', dados_funcionario['endereco'])
         print('Número de vendas do funcionário: ', dados_funcionario['num_vendas'])
         print('\n')
 

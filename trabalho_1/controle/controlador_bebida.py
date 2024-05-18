@@ -1,6 +1,6 @@
-import sys
-#sys.path.append(r'C:\Users\Usuario\Documents\DSO\trabalho_dso\limite')
-#sys.path.append(r'C:\Users\Usuario\Documents\DSO\trabalho dso\entidade')
+import sys,os
+
+sys.path.insert(0,os.path.abspath(os.curdir))
 
 from trabalho_1.limite.tela_bebida import TelaBebida
 from trabalho_1.entidade.bebida import Bebida

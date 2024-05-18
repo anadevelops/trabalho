@@ -1,3 +1,7 @@
+import sys,os
+
+sys.path.insert(0,os.path.abspath(os.curdir))
+
 from trabalho_1.entidade.pessoa import Pessoa
 from trabalho_1.entidade.endereco import Endereco
 
@@ -35,3 +39,7 @@ class Funcionario(Pessoa):
     def funcao(self, funcao):
         if isinstance(funcao, str):
             self.__funcao = funcao
+
+    @num_vendas.setter
+    def num_vendas(self, vendas):
+        self.__num_vendas = vendas

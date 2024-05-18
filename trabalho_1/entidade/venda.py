@@ -1,7 +1,11 @@
-from bebida import Bebida
-from refeicao import Refeicao
+import sys,os
+
+sys.path.insert(0,os.path.abspath(os.curdir))
+
+from trabalho_1.entidade.bebida import Bebida
+from trabalho_1.entidade.refeicao import Refeicao
 from trabalho_1.entidade.funcionario import Funcionario
-from cliente import Cliente
+from trabalho_1.entidade.cliente import Cliente
 
 class Venda:
     def __init__(self, cliente: Cliente, funcionario: Funcionario, refeicao: Refeicao, bebida: Bebida):

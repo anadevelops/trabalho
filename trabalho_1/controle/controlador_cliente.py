@@ -1,9 +1,10 @@
+import sys,os
+
+sys.path.insert(0,os.path.abspath(os.curdir))
+
 from trabalho_1.entidade.cliente import Cliente
 from trabalho_1.limite.tela_cliente import TelaCliente
 
-import sys, os
-
-os.path.abspath(os.curdir)
 
 class ControladorCliente:
     def __init__(self, controlador_sistema):
@@ -20,16 +21,23 @@ class ControladorCliente:
     def add_cliente(self):
         dados_cliente = self.__tela_cliente.pega_dados_cliente()
         new_cli = Cliente(dados_cliente['nome'],
-                                dados_cliente['cpf'],
-                                dados_cliente['codigo'])
-        if self.pega_cliente_p_cod(new_cli.codigo) is not None:
+                                dados_cliente['cpf'])
+        new_cli.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_cliente()
+        print(new_cli.codigo)
+        if isinstance(new_cli, Cliente):
             self.__clientes.append(new_cli)
+            self.__tela_cliente.mostra_msg('Cliente criado')
+        else:
+            self.__tela_cliente.mostra_msg('Dados incorretos: impossível criar cliente')
 
     def lista_clientes(self):
-        for cli in self.__clientes:
-            self.__tela_cliente.mostra_cliente({'nome': cli.nome,
-                                                'cpf': cli.cpf,
-                                                'codigo': cli.codigo})
+        if len(self.__clientes) > 0:
+            for cli in self.__clientes:
+                self.__tela_cliente.mostra_cliente({'nome': cli.nome,
+                                                    'cpf': cli.cpf,
+                                                    'codigo': cli.codigo})
+        else:
+            self.__tela_cliente.mostra_msg('Não existem clientes cadastrados')
 
     def altera_cliente(self):
         self.lista_clientes()

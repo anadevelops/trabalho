@@ -1,12 +1,16 @@
-#from limite.tela_amigo import TelaAmigo
+import sys,os
+
+sys.path.insert(0,os.path.abspath(os.curdir))
+
 from trabalho_1.entidade.refeicao import Refeicao
+from trabalho_1.limite.tela_refeicao import TelaRefeicao
 
 class ControladorRefeicao():
 
     def __init__(self, controlador_sistema):
         self.__refeicoes = []
         self.__controlador_sistema = controlador_sistema
-        #self.__tela_refeicao = TelaRefeicao()
+        self.__tela_refeicao = TelaRefeicao()
 
     def pega_refeicao_por_codigo(self, codigo: int):
         for refeicao in self.__refeicoes:
@@ -14,13 +18,14 @@ class ControladorRefeicao():
                 return refeicao
         return None
 
-    # Sugestão: não deixe cadastrar dois amigos com o mesmo CPF
     def incluir_refeicao(self):
         dados_refeicao = self.__tela_refeicao.pega_dados_refeicao()
-        refeicao = Refeicao(dados_refeicao["nome"], dados_refeicao["custo"], dados_refeicao["preco"],
+        refeicao = Refeicao(dados_refeicao["nome"], dados_refeicao["preco"],
                          dados_refeicao["percent_comissao"], dados_refeicao["codigo"], 
                          dados_refeicao["veget"], dados_refeicao["vegan"], 
-                         dados_refeicao["gluten"], dados_refeicao["lactose"])
+                         dados_refeicao["gluten"], dados_refeicao["lactose"],
+                         dados_refeicao['ingrediente1'], dados_refeicao['ingrediente2'],
+                         dados_refeicao['ingrediente3'])
         self.__refeicoes.append(refeicao)
 
     def alterar_refeicao(self):

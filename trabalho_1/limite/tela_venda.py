@@ -20,14 +20,12 @@ class TelaVenda:
 
     def pega_dados_venda(self):
         print('---------- DADOS VENDA ----------')
-        cod = int(input('Código: '))
         cli = int(input('Cliente:' ))
         func = int(input('Funcionário: '))
         ref = int(input('Refeição: '))
         beb = int(input('Bebida: '))
 
-        return {'codigo': cod,
-                 'cliente': cli,
+        return {'cliente': cli,
                  'funcionario': func,
                  'refeicao': ref,
                  'bebida': beb}

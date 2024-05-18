@@ -14,11 +14,9 @@ class TelaCliente:
         print('---------- DADOS CLIENTE ----------')
         nome = str(input('Nome: '))
         cpf = int(input('CPF: '))
-        codigo = int(input('Código: '))
 
         return {'nome': nome,
-                 'cpf': cpf,
-                 'codigo': codigo}
+                 'cpf': cpf}
 
     def mostra_cliente(self, dados_cliente):
         print('Nome do cliente: ', dados_cliente['nome'])

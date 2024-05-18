@@ -1,3 +1,7 @@
+import sys,os
+
+sys.path.insert(0,os.path.abspath(os.curdir))
+
 from trabalho_1.entidade.funcionario import Funcionario
 from trabalho_1.limite.tela_funcionario import TelaFuncionario
 
@@ -23,16 +27,19 @@ class ControladorFuncionario:
                                 dados_funcionario['rua'],
                                 dados_funcionario['bairro'],
                                 dados_funcionario['cidade'])
-        if self.pega_funcionario_p_cpf(new_func.cpf) is not None:
+        new_func.num_vendas = 0
+        if isinstance(new_func, Funcionario):
             self.__funcionarios.append(new_func)
+            self.__tela_funcionario.mostra_msg('Funcionário criado')
 
     def lista_funcionarios(self):
         for func in self.__funcionarios:
-            self.__tela_funcionario.mostra_funcionario({'nome': func.nome, 
+            self.__tela_funcionario.mostra_funcionario({'nome': func.nome,
                                             'cpf': func.cpf,
                                             'salario': func.salario,
                                             'funcao': func.funcao,
-                                            'endereco': func.endereco.rua + func.endereco.bairro + func.endereco.cidade})
+                                            'endereco': func.endereco.rua + ', ' + func.endereco.bairro + ', ' + func.endereco.cidade,
+                                            'num_vendas': func.num_vendas})
 
     def altera_funcionario(self):
         self.lista_funcionarios()

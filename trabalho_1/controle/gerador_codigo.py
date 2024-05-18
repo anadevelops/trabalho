@@ -29,29 +29,29 @@ class GeradorCodigo:
     def gera_cod_venda(self):
         cod_atual = self.cod_venda
         novo = cod_atual + 1
-        self.cod_venda = novo
+        self.__cod_venda = novo
         return self.cod_venda
 
     def gera_cod_cliente(self):
         cod_atual = self.cod_cliente
         novo = cod_atual + 1
-        self.cod_cliente = novo
+        self.__cod_cliente = novo
         return self.cod_cliente
 
     def gera_cod_refeicao(self):
         cod_atual = self.cod_refeicao
         novo = cod_atual + 1
-        self.cod_refeicao = novo
+        self.__cod_refeicao = novo
         return self.cod_refeicao
 
     def gera_cod_bebida(self):
         cod_atual = self.cod_bebida
         novo = cod_atual + 1
-        self.cod_bebida = novo
+        self.__cod_bebida = novo
         return self.cod_bebida
 
     def gera_cod_suprimento(self):
         cod_atual = self.cod_suprimento
         novo = cod_atual + 1
-        self.cod_suprimento = novo
+        self.__cod_suprimento = novo
         return self.cod_suprimento
