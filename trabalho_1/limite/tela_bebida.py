@@ -17,33 +17,31 @@ class TelaBebida():
     print("-------- DADOS BEBIDA ----------")
     nome = input("Nome: ")
     preco = input("Preço: ")
-#    veget = input("Vegetariano: ")
-#    vegan = input("Vegano: ")
-#    gluten = input("Gluten: ")
-#    lactose = input("Lactose: ")
+    veget = input("Vegetariano: ")
+    vegan = input("Vegano: ")
+    gluten = input("Gluten: ")
+    lactose = input("Lactose: ")
     grau_alcoolico = input("Grau alcoolico: ")
     ingrediente1 = int(input("Código do ingrediente 1: "))
     ingrediente2 = int(input("Código do ingrediente 2: "))
 
     return {"nome": nome, "preco": preco,
-            #"veget": veget,
-            #"vegan": vegan, "gluten": gluten, "lactose": lactose,
+            "veget": veget, "vegan": vegan,
+            "gluten": gluten, "lactose": lactose,
             "ingrediente1": ingrediente1, "ingrediente2": ingrediente2,
             "grau_alcoolico": grau_alcoolico}
 
   def mostra_bebida(self, dados_bebida):
-    print("NOME DO PRATO: ", dados_bebida["nome"])
-    #print("CUSTO DO PRATO: ", dados_bebida["custo"])
-    print("PRECO DO PRATO: ", dados_bebida["preco"])
-    print("CÓDIGO DO PRATO: ", dados_bebida["codigo"])
+    print("CÓDIGO DA BEBIDA: ", dados_bebida["codigo"])
+    print("NOME DA BEBIDA: ", dados_bebida["nome"])
+    print("PRECO DA BEBIDA: ", dados_bebida["preco"])
     print("GRAU ALCOOLICO: ", dados_bebida["grau_alcoolico"])
     print("INGREDIENTE 1: ", dados_bebida["ingrediente1"])
     print("INGREDIENTE 2: ", dados_bebida["ingrediente2"])
-#    print("CÓDIGO DO PRATO: ", dados_bebida["codigo"])
-#    print("VEGETARIANO: ", dados_bebida["veget"])
-#    print("VEGANO: ", dados_bebida["vegan"])
-#    print("GLUTEN: ", dados_bebida["gluten"])
-#    print("LACTOSE: ", dados_bebida["lactose"])
+    print("VEGETARIANO: ", dados_bebida["veget"])
+    print("VEGANO: ", dados_bebida["vegan"])
+    print("GLUTEN: ", dados_bebida["gluten"])
+    print("LACTOSE: ", dados_bebida["lactose"])
     print("\n")
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
