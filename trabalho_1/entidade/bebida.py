@@ -6,13 +6,13 @@ from trabalho_1.entidade.produto import Produto
 from trabalho_1.entidade.suprimento import Suprimento
 
 class Bebida(Produto):
-    def __init__(self, nome: str, preco: float,
+    def __init__(self, nome: str,
                  veget: bool, vegan: bool,
                  gluten: bool, lactose: bool,
                  ingrediente1: Suprimento,
                  ingrediente2: Suprimento,
                  grau_alcoolico: float):
-        super().__init__(nome, preco,
+        super().__init__(nome,
                          veget, vegan,
                          gluten, lactose,
                          ingrediente1,

@@ -7,12 +7,11 @@ from trabalho_1.entidade.suprimento import Suprimento
 
 class Produto(ABC):
     @abstractmethod
-    def __init__(self, nome: str, preco: float,
+    def __init__(self, nome: str,
                  veget: bool, vegan: bool,
                  gluten: bool, lactose: bool,
                  ingrediente1: Suprimento, ingrediente2: Suprimento):
         self.__nome = nome
-        self.__preco = preco
         self.__veget = veget
         self.__vegan = vegan
         self.__gluten = gluten
@@ -27,6 +26,9 @@ class Produto(ABC):
 
         for ingrediente in self.__ingredientes:
             self.__custo += ingrediente.preco
+        
+        self.__preco = round(self.__custo * 1.20, 2)
+
 
     @property
     def custo(self):

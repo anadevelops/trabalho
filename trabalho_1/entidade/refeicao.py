@@ -6,10 +6,10 @@ from trabalho_1.entidade.produto import Produto
 from trabalho_1.entidade.suprimento import Suprimento
 
 class Refeicao(Produto):
-    def __init__(self, nome: str, preco: float,
-                 #veget: bool,
-                 #vegan: bool, gluten: bool, lactose: bool,
+    def __init__(self, nome: str,
+                 veget: bool,
+                 vegan: bool, gluten: bool, lactose: bool,
                  ingrediente1: Suprimento, ingrediente2: Suprimento):
-        super().__init__(nome, preco,
-                         #veget, vegan, gluten, lactose,
+        super().__init__(nome,
+                         veget, vegan, gluten, lactose,
                          ingrediente1, ingrediente2)

@@ -1,7 +1,6 @@
 class Suprimento:
-    def __init__(self, nome: str, qtd: int, preco: int):
+    def __init__(self, nome: str, preco: int):
         self.__nome = nome
-        self.__qtd = qtd
         self.__preco = preco
         self.__codigo = 0
 
@@ -14,10 +13,6 @@ class Suprimento:
         return self.__nome
 
     @property
-    def qtd(self):
-        return self.__qtd
-
-    @property
     def preco(self):
         return self.__preco
 
@@ -25,11 +20,6 @@ class Suprimento:
     def nome(self, nome):
         if isinstance(nome, str):
             self.__nome = nome
-    
-    @qtd.setter
-    def qtd(self, qtd):
-        if isinstance(qtd, int):
-            self.__qtd = qtd
 
     @preco.setter
     def preco(self, preco):
