@@ -8,13 +8,11 @@ from trabalho_1.entidade.suprimento import Suprimento
 class Produto(ABC):
     @abstractmethod
     def __init__(self, nome: str, preco: float,
-                 percent_comissao: float,
                  #veget: bool,
                  #vegan: bool, gluten: bool, lactose: bool,
-                 ingrediente1: Suprimento, ingrediente2: Suprimento, ingrediente3: Suprimento):
+                 ingrediente1: Suprimento, ingrediente2: Suprimento):
         self.__nome = nome
         self.__preco = preco
-        self.__percent_comissao = percent_comissao
        # self.__codigo = codigo
         #self.__veget = veget
         #self.__vegan = vegan
@@ -22,16 +20,19 @@ class Produto(ABC):
         #self.__lactose = lactose
         self.__codigo = 0
 
-        self.__suprimentos = []
+        self.__ingredientes = []
         self.__custo = 0
 
-        self.__suprimentos.append(ingrediente1)
-        self.__suprimentos.append(ingrediente2)
-        self.__suprimentos.append(ingrediente3)
+        self.__ingredientes.append(ingrediente1)
+        self.__ingredientes.append(ingrediente2)
 
-        for suprimento in self.__suprimentos:
-            self.__custo += suprimento.preco
+        for ingrediente in self.__ingredientes:
+            self.__custo += ingrediente.preco
 
+    @property
+    def custo(self):
+        return self.__custo
+    
     @property
     def nome(self):
         return self.__nome
@@ -41,12 +42,8 @@ class Produto(ABC):
         return self.__preco
 
     @property
-    def percent_comissao(self):
-        return self.__percent_comissao
-
-#    @property
-#    def codigo(self):
- #       return self.__codigo
+    def codigo(self):
+       return self.__codigo
 
 #    @property
 #    def veget(self):
@@ -72,13 +69,9 @@ class Produto(ABC):
     def preco(self, preco):
         self.__preco = preco
 
-    @percent_comissao.setter
-    def percent_comissao(self, percent_comissao):
-        self.__percent_comissao = percent_comissao
-
-#    @codigo.setter
-#    def codigo(self, codigo):
-#        self.__codigo = codigo
+    @codigo.setter
+    def codigo(self, codigo):
+        self.__codigo = codigo
 
 #    @veget.setter
 #    def veget(self, veget):
@@ -96,5 +89,14 @@ class Produto(ABC):
 #    def lactose(self, lactose):
 #        self.__lactose = lactose
 
-    def calcula_custo(self):
-        return self.__custo
+    def pega_primeiro_ingrediente(self):
+        return self.__ingredientes[0]
+
+    def pega_segundo_ingrediente(self):
+        return self.__ingredientes[1]
+    
+    def altera_primeiro_ing(self, ing: Suprimento):
+        self.__ingredientes[0] = ing
+
+    def altera_segundo_ing(self, ing: Suprimento):
+        self.__ingredientes[1] = ing
