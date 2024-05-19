@@ -27,8 +27,8 @@ class ControladorBebida():
         if ing1 is not None and ing2 is not None:
             nova_bebida = Bebida(dados_bebida["nome"],
                                  dados_bebida["preco"],
-                                #dados_bebida["veget"], dados_bebida["vegan"], 
-                                #dados_bebida["gluten"], dados_bebida["lactose"],
+                                 dados_bebida["veget"], dados_bebida["vegan"],
+                                 dados_bebida["gluten"], dados_bebida["lactose"],
                                 ing1, ing2,
                                 dados_bebida["grau_alcoolico"])
             nova_bebida.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_bebida()
@@ -46,10 +46,10 @@ class ControladorBebida():
             novos_dados_bebida = self.__tela_bebida.pega_dados_bebida()
             bebida.nome = novos_dados_bebida["nome"]
             bebida.preco = novos_dados_bebida["preco"]
-            #bebida.veget = novos_dados_bebida["veget"]
-            #bebida.vegan = novos_dados_bebida["vegan"]
-            #bebida.gluten = novos_dados_bebida["gluten"]
-            #bebida.lactose = novos_dados_bebida["lactose"]
+            bebida.veget = novos_dados_bebida["veget"]
+            bebida.vegan = novos_dados_bebida["vegan"]
+            bebida.gluten = novos_dados_bebida["gluten"]
+            bebida.lactose = novos_dados_bebida["lactose"]
             bebida.grau_alcoolico = novos_dados_bebida["grau_alcoolico"]
 
             ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente1'])
@@ -64,13 +64,13 @@ class ControladorBebida():
     def lista_bebida(self):
         if len(self.__bebidas) > 0:
             for bebida in self.__bebidas:
-                ing1 = bebida.pega_primeiro_ingrediente()
-                ing2 = bebida.pega_segundo_ingrediente()
-                self.__tela_bebida.mostra_bebida({"nome": bebida.nome, #"custo": bebida.custo,
+                ing1 = bebida.pega_primeiro_ing()
+                ing2 = bebida.pega_segundo_ing()
+                self.__tela_bebida.mostra_bebida({"nome": bebida.nome,
                                                     "preco": bebida.preco,
                                                     "codigo": bebida.codigo,
-                                                    #"veget": bebida.veget, "vegan": bebida.vegan,
-                                                    #"gluten": bebida.gluten, "lactose": bebida.lactose,
+                                                    "veget": bebida.veget, "vegan": bebida.vegan,
+                                                    "gluten": bebida.gluten, "lactose": bebida.lactose,
                                                     "grau_alcoolico": bebida.grau_alcoolico,
                                                     "ingrediente1": ing1.nome,
                                                     "ingrediente2": ing2.nome})
