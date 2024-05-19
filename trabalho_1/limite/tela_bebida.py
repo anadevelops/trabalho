@@ -17,7 +17,6 @@ class TelaBebida():
     print("-------- DADOS BEBIDA ----------")
     nome = input("Nome: ")
     preco = input("Preço: ")
-    percent_comissao = input("Comissão: ")
 #    veget = input("Vegetariano: ")
 #    vegan = input("Vegano: ")
 #    gluten = input("Gluten: ")
@@ -25,20 +24,21 @@ class TelaBebida():
     grau_alcoolico = input("Grau alcoolico: ")
     ingrediente1 = int(input("Código do ingrediente 1: "))
     ingrediente2 = int(input("Código do ingrediente 2: "))
-    ingrediente3 = int(input("Código do ingrediente 3: "))
 
     return {"nome": nome, "preco": preco,
-            "percent_comissao": percent_comissao,
             #"veget": veget,
             #"vegan": vegan, "gluten": gluten, "lactose": lactose,
             "ingrediente1": ingrediente1, "ingrediente2": ingrediente2,
-            "ingrediente3": ingrediente3, "grau_alcoolico": grau_alcoolico}
+            "grau_alcoolico": grau_alcoolico}
 
   def mostra_bebida(self, dados_bebida):
     print("NOME DO PRATO: ", dados_bebida["nome"])
-    print("CUSTO DO PRATO: ", dados_bebida["custo"])
+    #print("CUSTO DO PRATO: ", dados_bebida["custo"])
     print("PRECO DO PRATO: ", dados_bebida["preco"])
-    print("COMISSÃO DO PRATO: ", dados_bebida["percent_comissao"])
+    print("CÓDIGO DO PRATO: ", dados_bebida["codigo"])
+    print("GRAU ALCOOLICO: ", dados_bebida["grau_alcoolico"])
+    print("INGREDIENTE 1: ", dados_bebida["ingrediente1"])
+    print("INGREDIENTE 2: ", dados_bebida["ingrediente2"])
 #    print("CÓDIGO DO PRATO: ", dados_bebida["codigo"])
 #    print("VEGETARIANO: ", dados_bebida["veget"])
 #    print("VEGANO: ", dados_bebida["vegan"])
@@ -48,7 +48,7 @@ class TelaBebida():
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def seleciona_bebida(self):
-    codigo = input("Código da bebida que deseja selecionar: ")
+    codigo = int(input("Código da bebida que deseja selecionar: "))
     return codigo
 
   def mostra_mensagem(self, msg):
