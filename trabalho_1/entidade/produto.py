@@ -8,16 +8,15 @@ from trabalho_1.entidade.suprimento import Suprimento
 class Produto(ABC):
     @abstractmethod
     def __init__(self, nome: str, preco: float,
-                 #veget: bool,
-                 #vegan: bool, gluten: bool, lactose: bool,
+                 veget: bool, vegan: bool,
+                 gluten: bool, lactose: bool,
                  ingrediente1: Suprimento, ingrediente2: Suprimento):
         self.__nome = nome
         self.__preco = preco
-       # self.__codigo = codigo
-        #self.__veget = veget
-        #self.__vegan = vegan
-        #self.__gluten = gluten
-        #self.__lactose = lactose
+        self.__veget = veget
+        self.__vegan = vegan
+        self.__gluten = gluten
+        self.__lactose = lactose
         self.__codigo = 0
 
         self.__ingredientes = []
@@ -45,21 +44,21 @@ class Produto(ABC):
     def codigo(self):
        return self.__codigo
 
-#    @property
-#    def veget(self):
- #       return self.__veget
+    @property
+    def veget(self):
+        return self.__veget
 
- #   @property
-  #  def vegan(self):
- #       return self.__vegan
-#
-#    @property
- #   def gluten(self):
- #       return self.__gluten
+    @property
+    def vegan(self):
+        return self.__vegan
 
-  #  @property
-#    def lactose(self):
- #       return self.__lactose
+    @property
+    def gluten(self):
+        return self.__gluten
+
+    @property
+    def lactose(self):
+        return self.__lactose
 
     @nome.setter
     def nome(self, nome):
@@ -73,26 +72,26 @@ class Produto(ABC):
     def codigo(self, codigo):
         self.__codigo = codigo
 
-#    @veget.setter
-#    def veget(self, veget):
-#        self.__veget = veget
+    @veget.setter
+    def veget(self, veget):
+        self.__veget = veget
 
-#    @vegan.setter
-#    def vegan(self, vegan):
-#        self.__vegan = vegan
+    @vegan.setter
+    def vegan(self, vegan):
+        self.__vegan = vegan
 
-#    @gluten.setter
-#    def gluten(self, gluten):
-#        self.__gluten = gluten
+    @gluten.setter
+    def gluten(self, gluten):
+        self.__gluten = gluten
 
-#    @lactose.setter
-#    def lactose(self, lactose):
-#        self.__lactose = lactose
+    @lactose.setter
+    def lactose(self, lactose):
+        self.__lactose = lactose
 
-    def pega_primeiro_ingrediente(self):
+    def pega_primeiro_ing(self):
         return self.__ingredientes[0]
 
-    def pega_segundo_ingrediente(self):
+    def pega_segundo_ing(self):
         return self.__ingredientes[1]
     
     def altera_primeiro_ing(self, ing: Suprimento):

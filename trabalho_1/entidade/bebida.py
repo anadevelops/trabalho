@@ -7,13 +7,14 @@ from trabalho_1.entidade.suprimento import Suprimento
 
 class Bebida(Produto):
     def __init__(self, nome: str, preco: float,
-                 #veget: bool,
-                 #vegan: bool, gluten: bool, lactose: bool,
+                 veget: bool, vegan: bool,
+                 gluten: bool, lactose: bool,
                  ingrediente1: Suprimento,
                  ingrediente2: Suprimento,
                  grau_alcoolico: float):
         super().__init__(nome, preco,
-                         #veget, vegan, gluten, lactose,
+                         veget, vegan,
+                         gluten, lactose,
                          ingrediente1,
                          ingrediente2)
         self.__grau_alcoolico = grau_alcoolico
