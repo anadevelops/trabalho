@@ -26,7 +26,6 @@ class ControladorBebida():
 
         if ing1 is not None and ing2 is not None:
             nova_bebida = Bebida(dados_bebida["nome"],
-                                 dados_bebida["preco"],
                                  dados_bebida["veget"], dados_bebida["vegan"],
                                  dados_bebida["gluten"], dados_bebida["lactose"],
                                 ing1, ing2,
@@ -45,7 +44,6 @@ class ControladorBebida():
         if(bebida is not None):
             novos_dados_bebida = self.__tela_bebida.pega_dados_bebida()
             bebida.nome = novos_dados_bebida["nome"]
-            bebida.preco = novos_dados_bebida["preco"]
             bebida.veget = novos_dados_bebida["veget"]
             bebida.vegan = novos_dados_bebida["vegan"]
             bebida.gluten = novos_dados_bebida["gluten"]

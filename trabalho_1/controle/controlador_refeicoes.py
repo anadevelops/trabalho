@@ -26,9 +26,8 @@ class ControladorRefeicao():
 
         if ing1 is not None and ing2 is not None:
             nova_refeicao = Refeicao(dados_refeicao["nome"],
-                                 dados_refeicao["preco"],
-                                #dados_bebida["veget"], dados_bebida["vegan"], 
-                                #dados_bebida["gluten"], dados_bebida["lactose"],
+                                dados_refeicao["veget"], dados_refeicao["vegan"], 
+                                dados_refeicao["gluten"], dados_refeicao["lactose"],
                                 ing1, ing2)
             nova_refeicao.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_refeicao()
             self.__refeicoes.append(nova_refeicao)
@@ -44,11 +43,10 @@ class ControladorRefeicao():
         if(refeicao is not None):
             novos_dados_refeicao = self.__tela_refeicao.pega_dados_refeicao()
             refeicao.nome = novos_dados_refeicao["nome"]
-            refeicao.preco = novos_dados_refeicao["preco"]
-            #bebida.veget = novos_dados_bebida["veget"]
-            #bebida.vegan = novos_dados_bebida["vegan"]
-            #bebida.gluten = novos_dados_bebida["gluten"]
-            #bebida.lactose = novos_dados_bebida["lactose"]
+            refeicao.veget = novos_dados_refeicao["veget"]
+            refeicao.vegan = novos_dados_refeicao["vegan"]
+            refeicao.gluten = novos_dados_refeicao["gluten"]
+            refeicao.lactose = novos_dados_refeicao["lactose"]
 
             ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_refeicao['ingrediente1'])
             ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_refeicao['ingrediente2'])
@@ -65,12 +63,13 @@ class ControladorRefeicao():
                 ing1 = refeicao.pega_primeiro_ing()
                 ing2 = refeicao.pega_segundo_ing()
                 self.__tela_refeicao.mostra_refeicao({"nome": refeicao.nome,
-                                                    "preco": refeicao.preco,
-                                                    "codigo": refeicao.codigo,
-                                                    #"veget": bebida.veget, "vegan": bebida.vegan,
-                                                    #"gluten": bebida.gluten, "lactose": bebida.lactose,
-                                                    "ingrediente1": ing1.nome,
-                                                    "ingrediente2": ing2.nome})
+                                                      "custo": refeicao.custo,
+                                                        "preco": refeicao.preco,
+                                                        "codigo": refeicao.codigo,
+                                                        "veget": refeicao.veget, "vegan": refeicao.vegan,
+                                                        "gluten": refeicao.gluten, "lactose": refeicao.lactose,
+                                                        "ingrediente1": ing1.nome,
+                                                        "ingrediente2": ing2.nome})
         else:
             self.__tela_refeicao.mostra_mensagem('ATENCAO: Não existem refeicoes cadastradas')
 

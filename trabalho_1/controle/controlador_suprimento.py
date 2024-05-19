@@ -21,10 +21,8 @@ class ControladorSuprimento():
     def incluir_suprimento(self):
         dados_suprimento = self.__tela_suprimento.pega_dados_suprimento()
         novo_suprimento = Suprimento(dados_suprimento["nome"],
-                                     dados_suprimento["qtd"],
                                      dados_suprimento["preco"])
         novo_suprimento.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_suprimento()
-        print(novo_suprimento.codigo)
         if isinstance(novo_suprimento, Suprimento):
             self.__suprimentos.append(novo_suprimento)
             self.__tela_suprimento.mostra_mensagem('Suprimento criado')
@@ -35,7 +33,6 @@ class ControladorSuprimento():
         if len(self.__suprimentos) > 0:
             for sup in self.__suprimentos:
                 self.__tela_suprimento.mostra_suprimento({'nome': sup.nome,
-                                                        'qtd': sup.qtd,
                                                         'preco': sup.preco,
                                                         'codigo': sup.codigo})
         else:
@@ -49,7 +46,6 @@ class ControladorSuprimento():
         if sup is not None:
             novos_dados_sup = self.__tela_suprimento.pega_dados_suprimento()
             sup.nome = novos_dados_sup['nome']
-            sup.qtd = novos_dados_sup['qtd']
             sup.preco = novos_dados_sup['preco']
             self.listar_suprimentos()
         else:
