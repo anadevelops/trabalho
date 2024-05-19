@@ -14,14 +14,13 @@ class TelaSuprimento():
     def pega_dados_suprimento(self):
         print('---------- DADOS DO SUPRIMENTO -----------')
         nome = input('Nome do suprimento: ')
-        qtd = int(input('Quantidade do suprimento: '))
         preco = float(input('Preço do suprimento: '))
 
-        return {"nome": nome, "qtd": qtd, "preco": preco}
+        return {"nome": nome, "preco": preco}
     
     def mostra_suprimento(self, dados_suprimento):
+        print("---------SUPRIMENTOS EM ESTOQUE----------")
         print("NOME DO SUPRIMENTO: ", dados_suprimento["nome"])
-        print("QUANTIDADE DO SUPRIMENTO: ", dados_suprimento["qtd"])
         print("PRECO DO SUPRIMENTO: ", dados_suprimento["preco"])
         print("CODIGO DO SUPRIMENTO: ", dados_suprimento["codigo"])
         print("\n")

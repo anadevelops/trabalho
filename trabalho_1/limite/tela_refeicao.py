@@ -16,31 +16,30 @@ class TelaRefeicao():
   def pega_dados_refeicao(self):
     print("-------- DADOS REFEIÇÃO ----------")
     nome = input("Nome: ")
-    preco = input("Preço: ")
-#    veget = input("Vegetariano: ")
-#    vegan = input("Vegano: ")
-#    gluten = input("Gluten: ")
-#    lactose = input("Lactose: ")
+    veget = input("Vegetariano: ")
+    vegan = input("Vegano: ")
+    gluten = input("Gluten: ")
+    lactose = input("Lactose: ")
     ingrediente1 = int(input("Código do ingrediente 1: "))
     ingrediente2 = int(input("Código do ingrediente 2: "))
 
-    return {"nome": nome, "preco": preco,
-            #"veget": veget,
-            #"vegan": vegan, "gluten": gluten, "lactose": lactose,
+    return {"nome": nome,
+            "veget": veget,
+            "vegan": vegan, "gluten": gluten, "lactose": lactose,
             "ingrediente1": ingrediente1, "ingrediente2": ingrediente2}
 
   def mostra_refeicao(self, dados_refeicao):
+    print("---------REFEIÇÕES REGISTRADAS----------")
     print("NOME DO PRATO: ", dados_refeicao["nome"])
-    #print("CUSTO DO PRATO: ", dados_bebida["custo"])
+    print("CUSTO DO PRATO: ", dados_refeicao["custo"])
     print("PRECO DO PRATO: ", dados_refeicao["preco"])
     print("INGREDIENTE 1: ", dados_refeicao["ingrediente1"])
     print("INGREDIENTE 2: ", dados_refeicao["ingrediente2"])
+    print("VEGETARIANO: ", dados_refeicao["veget"])
+    print("VEGANO: ", dados_refeicao["vegan"])
+    print("GLUTEN: ", dados_refeicao["gluten"])
+    print("LACTOSE: ", dados_refeicao["lactose"])
     print("CÓDIGO DO PRATO: ", dados_refeicao["codigo"])
-#    print("CÓDIGO DO PRATO: ", dados_bebida["codigo"])
-#    print("VEGETARIANO: ", dados_bebida["veget"])
-#    print("VEGANO: ", dados_bebida["vegan"])
-#    print("GLUTEN: ", dados_bebida["gluten"])
-#    print("LACTOSE: ", dados_bebida["lactose"])
     print("\n")
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado

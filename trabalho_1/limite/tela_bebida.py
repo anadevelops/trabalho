@@ -16,7 +16,6 @@ class TelaBebida():
   def pega_dados_bebida(self):
     print("-------- DADOS BEBIDA ----------")
     nome = input("Nome: ")
-    preco = input("Preço: ")
     veget = input("Vegetariano: ")
     vegan = input("Vegano: ")
     gluten = input("Gluten: ")
@@ -25,14 +24,14 @@ class TelaBebida():
     ingrediente1 = int(input("Código do ingrediente 1: "))
     ingrediente2 = int(input("Código do ingrediente 2: "))
 
-    return {"nome": nome, "preco": preco,
+    return {"nome": nome,
             "veget": veget, "vegan": vegan,
             "gluten": gluten, "lactose": lactose,
             "ingrediente1": ingrediente1, "ingrediente2": ingrediente2,
             "grau_alcoolico": grau_alcoolico}
 
   def mostra_bebida(self, dados_bebida):
-    print("CÓDIGO DA BEBIDA: ", dados_bebida["codigo"])
+    print("---------BEBIDAS REGISTRADAS----------")
     print("NOME DA BEBIDA: ", dados_bebida["nome"])
     print("PRECO DA BEBIDA: ", dados_bebida["preco"])
     print("GRAU ALCOOLICO: ", dados_bebida["grau_alcoolico"])
@@ -42,6 +41,7 @@ class TelaBebida():
     print("VEGANO: ", dados_bebida["vegan"])
     print("GLUTEN: ", dados_bebida["gluten"])
     print("LACTOSE: ", dados_bebida["lactose"])
+    print("CÓDIGO DA BEBIDA: ", dados_bebida["codigo"])
     print("\n")
 
   # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
