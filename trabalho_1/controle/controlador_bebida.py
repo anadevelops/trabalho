@@ -12,6 +12,14 @@ class ControladorBebida():
         self.__controlador_sistema = controlador_sistema
         self.__tela_bebida = TelaBebida()
 
+    @property
+    def bebidas(self):
+        return [bebida for bebida in self.__bebidas]
+
+    @bebidas.setter
+    def bebidas(self, bebida):
+        self.__bebidas.append(bebida)
+
     def pega_bebida_por_codigo(self, codigo: int):
         for bebida in self.__bebidas:
             if(bebida.codigo == codigo):

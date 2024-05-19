@@ -1,5 +1,5 @@
 class Suprimento:
-    def __init__(self, nome: str, preco: int):
+    def __init__(self, nome: str, preco: float):
         self.__nome = nome
         self.__preco = preco
         self.__codigo = 0
@@ -18,8 +18,7 @@ class Suprimento:
 
     @nome.setter
     def nome(self, nome):
-        if isinstance(nome, str):
-            self.__nome = nome
+        self.__nome = nome
 
     @preco.setter
     def preco(self, preco):

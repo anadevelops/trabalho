@@ -7,18 +7,29 @@ class TelaCliente:
         print('4 - Excluir cliente')
         print('0 - Retornar') 
 
-        opcao = int(input('Escolha a opção: '))
-        return opcao
+        try:
+            opcao = int(input('Escolha a opção: '))
+        except ValueError:
+            self.mostra_msg('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
+        else:
+            return opcao
 
     def pega_dados_cliente(self):
         print('---------- DADOS CLIENTE ----------')
-        nome = str(input('Nome: '))
-        cpf = int(input('CPF: '))
+        while True:
+            try:
+                nome = str(input('Nome: '))
+                cpf = int(input('CPF: '))
 
-        return {'nome': nome,
-                 'cpf': cpf}
+            except ValueError:
+                self.mostra_msg('Formato de informação está incorreto, tente novamente')
+
+            else:
+                return {'nome': nome,
+                        'cpf': cpf}
 
     def mostra_cliente(self, dados_cliente):
+        print('---------- CLIENTE REGISTRADO ----------')
         print('Nome do cliente: ', dados_cliente['nome'])
         print('CPF do cliente: ', dados_cliente['cpf'])
         print('Código do cliente: ', dados_cliente['codigo'])

@@ -13,6 +13,14 @@ class ControladorFuncionario:
         self.__tela_funcionario = TelaFuncionario()
         self.__controlador_sistema = controlador_sistema
 
+    @property
+    def funcionarios(self):
+        return self.__funcionarios
+
+    @funcionarios.setter
+    def funcionarios(self, funcionario):
+        self.__funcionarios.append(funcionario)
+
     def pega_funcionario_p_cpf(self, cpf: int):
         for funcionario in self.__funcionarios:
             if funcionario.cpf == cpf:

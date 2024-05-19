@@ -43,6 +43,7 @@ class TelaFuncionario:
                         'cidade': cidade}
 
     def mostra_funcionario(self, dados_funcionario):
+        print('---------- FUNCIONÁRIO REGISTRADO ----------')
         print('Nome do funcionário: ', dados_funcionario['nome'])
         print('CPF do funcionário: ', dados_funcionario['cpf'])
         print('Salário do funcionário: ', dados_funcionario['salario'])

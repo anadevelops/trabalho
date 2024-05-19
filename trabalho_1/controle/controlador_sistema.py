@@ -19,7 +19,7 @@ class ControladorSistema:
         self.__controlador_funcionario = ControladorFuncionario(self)
         self.__controlador_suprimento = ControladorSuprimento(self)
         self.__controlador_bebida = ControladorBebida(self)
-        self.__controlador_refeicoes = ControladorRefeicao(self)
+        self.__controlador_refeicao = ControladorRefeicao(self)
         self.__controlador_vendas = ControladorVendas(self)
         self.__gerador_codigo = GeradorCodigo()
         self.__tela_sistema = TelaSistema()
@@ -41,8 +41,8 @@ class ControladorSistema:
         return self.__controlador_bebida
 
     @property
-    def controlador_refeicoes(self):
-        return self.__controlador_refeicoes
+    def controlador_refeicao(self):
+        return self.__controlador_refeicao
 
     @property
     def controlador_vendas(self):
@@ -64,8 +64,8 @@ class ControladorSistema:
     def cadastra_suprimento(self):
         self.__controlador_suprimento.abre_tela()
 
-    def cadastra_refeicoes(self):
-        self.__controlador_refeicoes.abre_tela()
+    def cadastra_refeicao(self):
+        self.__controlador_refeicao.abre_tela()
 
     def cadastra_bebidas(self):
         self.__controlador_bebida.abre_tela()
@@ -79,7 +79,7 @@ class ControladorSistema:
     def abre_tela(self):
         lista_opcoes = {1: self.cadastra_cliente,
                         2: self.cadastra_funcionario,
-                        3: self.cadastra_refeicoes,
+                        3: self.cadastra_refeicao,
                         4: self.cadastra_bebidas,
                         5: self.cadastra_suprimento,
                         6: self.cadastra_vendas,

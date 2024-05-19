@@ -11,6 +11,14 @@ class ControladorSuprimento():
         self.__controlador_sistema = controlador_sistema
         self.__suprimentos = []
         self.__tela_suprimento = TelaSuprimento()
+
+    @property
+    def suprimentos(self):
+        return self.__suprimentos
+
+    @suprimentos.setter
+    def suprimentos(self, suprimento):
+        self.__suprimentos.append(suprimento)
         
     def pega_suprimento_por_codigo(self, codigo: int):
         for suprimento in self.__suprimentos:

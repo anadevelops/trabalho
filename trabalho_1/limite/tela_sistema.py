@@ -8,8 +8,15 @@ class TelaSistema:
         print('4 - Bebidas')
         print('5 - Suprimentos')
         print('6 - Vendas')
-        #Quando forem criadas as outras entidades, é só ir adicionando
         print('0 - Encerrar sistema')
 
-        opcao = int(input('Escolha a opção: '))
-        return opcao
+        try:
+            opcao = int(input('Escolha a opção: '))
+        except ValueError:
+            self.mostra_mensagem('Formato de entrada está incorreto. Tente novamente')
+        else:
+            return opcao
+
+    def mostra_mensagem(self, msg):
+        print(msg)
+    

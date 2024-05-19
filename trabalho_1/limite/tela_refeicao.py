@@ -2,7 +2,7 @@
 class TelaRefeicao():
 
   def tela_opcoes(self):
-    print("-------- AMIGOS ----------")
+    print("-------- REFEIÇÕES ----------")
     print("Escolha a opcao")
     print("1 - Incluir Refeição")
     print("2 - Alterar Refeição")
@@ -10,26 +10,36 @@ class TelaRefeicao():
     print("4 - Excluir Refeição")
     print("0 - Retornar")
 
-    opcao = int(input("Escolha a opcao: "))
-    return opcao
+    try:
+      opcao = int(input("Escolha a opcao: "))
+    except ValueError:
+      self.mostra_mensagem('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
+    else:
+      return opcao
 
   def pega_dados_refeicao(self):
     print("-------- DADOS REFEIÇÃO ----------")
-    nome = input("Nome: ")
-    veget = input("Vegetariano: ")
-    vegan = input("Vegano: ")
-    gluten = input("Gluten: ")
-    lactose = input("Lactose: ")
-    ingrediente1 = int(input("Código do ingrediente 1: "))
-    ingrediente2 = int(input("Código do ingrediente 2: "))
+    while True:
+      try:
+        nome = input("Nome: ")
+        veget = input("Vegetariano: ")
+        vegan = input("Vegano: ")
+        gluten = input("Gluten: ")
+        lactose = input("Lactose: ")
+        ingrediente1 = int(input("Código do ingrediente 1: "))
+        ingrediente2 = int(input("Código do ingrediente 2: "))
 
-    return {"nome": nome,
-            "veget": veget,
-            "vegan": vegan, "gluten": gluten, "lactose": lactose,
-            "ingrediente1": ingrediente1, "ingrediente2": ingrediente2}
+      except ValueError:
+        self.mostra_mensagem('Formato de informação está incorreto, tente novamente')
+
+      else:
+        return {"nome": nome,
+                "veget": veget,
+                "vegan": vegan, "gluten": gluten, "lactose": lactose,
+                "ingrediente1": ingrediente1, "ingrediente2": ingrediente2}
 
   def mostra_refeicao(self, dados_refeicao):
-    print("---------REFEIÇÕES REGISTRADAS----------")
+    print("--------- REFEIÇÃO REGISTRADA ----------")
     print("NOME DO PRATO: ", dados_refeicao["nome"])
     print("CUSTO DO PRATO: ", dados_refeicao["custo"])
     print("PRECO DO PRATO: ", dados_refeicao["preco"])

@@ -15,26 +15,38 @@ class TelaVenda:
         print('12 - Encerrar venda')
         print('0 - Retornar') 
 
-        opcao = int(input('Escolha a opção: '))
-        return opcao
+        try:
+            opcao = int(input('Escolha a opção: '))
+        except ValueError:
+            self.mostra_msg('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
+        else:
+            return opcao
 
     def pega_dados_venda(self):
         print('---------- DADOS VENDA ----------')
-        cli = int(input('Cliente:' ))
-        func = int(input('Funcionário: '))
-        ref = int(input('Refeição: '))
-        beb = int(input('Bebida: '))
+        while True:
+            try:
+                cli = int(input('Cliente:' ))
+                func = int(input('Funcionário: '))
+                ref = int(input('Refeição: '))
+                beb = int(input('Bebida: '))
+            
+            except ValueError:
+                self.mostra_msg('Formato de informação está incorreto, tente novamente')
 
-        return {'cliente': cli,
-                 'funcionario': func,
-                 'refeicao': ref,
-                 'bebida': beb}
+            else:
+                return {'cliente': cli,
+                        'funcionario': func,
+                        'refeicao': ref,
+                        'bebida': beb}
 
     def mostra_venda(self, dados_venda):
+        print('---------- VENDA REGISTRADA ----------')
         print('Código da venda: ', dados_venda['codigo'])
         print('Cliente da venda: ' , dados_venda['cliente'])
         print('Funcionário da venda: ', dados_venda['funcionario'])
-        print('Refeições da venda: ')
+        print('Refeições da venda: ', dados_venda['refeicoes'])
+        print('Bebidas da venda: ', dados_venda['bebidas'])
         print('\n')
     
     def seleciona_venda(self):

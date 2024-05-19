@@ -2,7 +2,7 @@
 class TelaBebida():
 
   def tela_opcoes(self):
-    print("-------- AMIGOS ----------")
+    print("-------- BEBIDAS ----------")
     print("Escolha a opcao")
     print("1 - Incluir Bebida")
     print("2 - Alterar Bebida")
@@ -10,28 +10,38 @@ class TelaBebida():
     print("4 - Excluir Bebida")
     print("0 - Retornar")
 
-    opcao = int(input("Escolha a opcao: "))
-    return opcao
+    try:
+      opcao = int(input("Escolha a opcao: "))
+    except ValueError:
+      self.mostra_mensagem('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
+    else:
+      return opcao
 
   def pega_dados_bebida(self):
     print("-------- DADOS BEBIDA ----------")
-    nome = input("Nome: ")
-    veget = input("Vegetariano: ")
-    vegan = input("Vegano: ")
-    gluten = input("Gluten: ")
-    lactose = input("Lactose: ")
-    grau_alcoolico = input("Grau alcoolico: ")
-    ingrediente1 = int(input("Código do ingrediente 1: "))
-    ingrediente2 = int(input("Código do ingrediente 2: "))
+    while True:
+      try:
+        nome = input("Nome: ")
+        veget = input("Vegetariano: ")
+        vegan = input("Vegano: ")
+        gluten = input("Gluten: ")
+        lactose = input("Lactose: ")
+        grau_alcoolico = input("Grau alcoolico: ")
+        ingrediente1 = int(input("Código do ingrediente 1: "))
+        ingrediente2 = int(input("Código do ingrediente 2: "))
 
-    return {"nome": nome,
-            "veget": veget, "vegan": vegan,
-            "gluten": gluten, "lactose": lactose,
-            "ingrediente1": ingrediente1, "ingrediente2": ingrediente2,
-            "grau_alcoolico": grau_alcoolico}
+      except ValueError:
+        self.mostra_mensagem('Formato de informação está incorreto, tente novamente')
+
+      else:
+        return {"nome": nome,
+                "veget": veget, "vegan": vegan,
+                "gluten": gluten, "lactose": lactose,
+                "ingrediente1": ingrediente1, "ingrediente2": ingrediente2,
+                "grau_alcoolico": grau_alcoolico}
 
   def mostra_bebida(self, dados_bebida):
-    print("---------BEBIDAS REGISTRADAS----------")
+    print("--------- BEBIDA REGISTRADA ----------")
     print("NOME DA BEBIDA: ", dados_bebida["nome"])
     print("PRECO DA BEBIDA: ", dados_bebida["preco"])
     print("GRAU ALCOOLICO: ", dados_bebida["grau_alcoolico"])

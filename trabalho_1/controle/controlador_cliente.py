@@ -12,6 +12,14 @@ class ControladorCliente:
         self.__tela_cliente = TelaCliente()
         self.__controlador_sistema = controlador_sistema
 
+    @property
+    def clientes(self):
+        return [cliente for cliente in self.__clientes]
+
+    @clientes.setter
+    def clientes(self, cliente):
+        self.__clientes.append(cliente)
+
     def pega_cliente_p_cod(self, cod: int):
         for cliente in self.__clientes:
             if cliente.codigo == cod:

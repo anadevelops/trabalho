@@ -12,6 +12,14 @@ class ControladorRefeicao():
         self.__controlador_sistema = controlador_sistema
         self.__tela_refeicao = TelaRefeicao()
 
+    @property
+    def refeicoes(self):
+        return self.__refeicoes
+
+    @refeicoes.setter
+    def refeicoes(self, refeicao):
+        self.__refeicoes.append(refeicao)
+
     def pega_refeicao_por_codigo(self, codigo: int):
         for refeicao in self.__refeicoes:
             if(refeicao.codigo == codigo):

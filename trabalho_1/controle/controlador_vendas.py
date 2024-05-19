@@ -26,13 +26,15 @@ class ControladorVendas:
     def incluir_venda(self):
         self.__controlador_sistema.controlador_funcionario.lista_funcionarios()
         self.__controlador_sistema.controlador_cliente.lista_clientes()
+        self.__controlador_sistema.controlador_bebida.lista_bebida()
+        self.__controlador_sistema.controlador_refeicao.lista_refeicao()
         dados_venda = self.__tela_venda.pega_dados_venda()
 
         cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(dados_venda['cliente'])
-        funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_por_cpf(dados_venda['funcionario'])
+        funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(dados_venda['funcionario'])
         refeicao = self.__controlador_sistema.controlador_refeicao.pega_refeicao_por_codigo(dados_venda['refeicao'])
         bebida = self.__controlador_sistema.controlador_bebida.pega_bebida_por_codigo(dados_venda['bebida'])
-        if (cliente is not None and funcionario is not None and refeicao is not None and bebida is not None):
+        if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
             venda = Venda(cliente, funcionario, refeicao, bebida)
             venda.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_venda()
             self.__vendas.append(venda)
@@ -44,8 +46,8 @@ class ControladorVendas:
         if len(self.__vendas) > 0:
             for venda in self.__vendas:
                 self.__tela_venda.mostra_venda({'codigo': venda.codigo,
-                                                'cliente': venda.cliente,
-                                                'funcionario': venda.funcionario,
+                                                'cliente': venda.cliente.nome,
+                                                'funcionario': venda.funcionario.nome,
                                                 'refeicoes': venda.refeicoes,
                                                 'bebidas': venda.bebidas})
         else:
@@ -80,6 +82,8 @@ class ControladorVendas:
             self.__tela_venda.mostra_msg('Venda inexistente')
 
     def vendas_p_cliente(self, codigo):
+        self.__controlador_sistema.controlador_cliente.lista_clientes()
+        self.__tela_venda.seleciona_cliente()
         cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(codigo)
         if cliente is not None:
             for venda in self.__vendas:
@@ -88,6 +92,8 @@ class ControladorVendas:
         return None
 
     def vendas_p_funcionario(self, cpf):
+        self.__controlador_sistema.controlador_funcionario.lista_funcionarios()
+        self.__tela_venda.seleciona_funcionario()
         funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(cpf)
         if funcionario is not None:
             for venda in self.__vendas:

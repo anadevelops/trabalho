@@ -8,15 +8,24 @@ class TelaSuprimento():
         print('4 - Excluir suprimento')
         print('0 - Retornar')
 
-        opcao = int(input('Escolha a opção: '))
-        return opcao
+        try:
+            opcao = int(input('Escolha a opção: '))
+        except ValueError:
+            self.mostra_mensagem('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
+        else:
+            return opcao
     
     def pega_dados_suprimento(self):
         print('---------- DADOS DO SUPRIMENTO -----------')
-        nome = input('Nome do suprimento: ')
-        preco = float(input('Preço do suprimento: '))
-
-        return {"nome": nome, "preco": preco}
+        while True:
+            try:
+                nome = input('Nome do suprimento: ')
+                preco = float(input('Preço do suprimento: '))
+            
+            except ValueError:
+                self.mostra_mensagem('Formato de informação está incorreto, tente novamente')
+            else:
+                return {"nome": nome, "preco": preco}
     
     def mostra_suprimento(self, dados_suprimento):
         print("---------SUPRIMENTOS EM ESTOQUE----------")
