@@ -134,7 +134,7 @@ class ControladorVendas:
             self.__tela_venda.mostra_msg('Lista vazia')
 
     def encerrar_venda(self):
-        self.lista_vendas()
+        self.vendas_abertas()
         cod_venda = self.__tela_venda.seleciona_venda()
         venda = self.pega_venda_p_codigo(cod_venda)
         if venda is not None:
@@ -144,6 +144,7 @@ class ControladorVendas:
                     self.__tela_venda.mostra_msg('Venda encerrada')
         else:
             self.__tela_venda.mostra_msg('Venda inexistente')
+
     def retornar(self):
         self.__controlador_sistema.abre_tela()
 
