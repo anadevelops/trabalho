@@ -64,31 +64,34 @@ class Produto(ABC):
 
     @nome.setter
     def nome(self, nome):
-        self.__nome = nome
+        if isinstance(nome, str):
+            self.__nome = nome
 
     @preco.setter
     def preco(self, preco):
-        self.__preco = preco
+        if isinstance(preco, float):
+            self.__preco = preco
 
     @codigo.setter
     def codigo(self, codigo):
-        self.__codigo = codigo
+        if isinstance(codigo, int):
+            self.__codigo = codigo
 
     @veget.setter
     def veget(self, veget):
-        self.__veget = veget
+            self.__veget = veget
 
     @vegan.setter
     def vegan(self, vegan):
-        self.__vegan = vegan
+            self.__vegan = vegan
 
     @gluten.setter
     def gluten(self, gluten):
-        self.__gluten = gluten
+            self.__gluten = gluten
 
     @lactose.setter
     def lactose(self, lactose):
-        self.__lactose = lactose
+            self.__lactose = lactose
 
     def pega_primeiro_ing(self):
         return self.__ingredientes[0]

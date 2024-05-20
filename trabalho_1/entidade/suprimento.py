@@ -18,12 +18,15 @@ class Suprimento:
 
     @nome.setter
     def nome(self, nome):
-        self.__nome = nome
+        if isinstance(nome, str):
+            self.__nome = nome
 
     @preco.setter
     def preco(self, preco):
-        self.__preco = preco
+        if isinstance(preco, float):
+            self.__preco = preco
 
     @codigo.setter
     def codigo(self, codigo):
-        self.__codigo = codigo
+        if isinstance(codigo, int):
+            self.__codigo = codigo
