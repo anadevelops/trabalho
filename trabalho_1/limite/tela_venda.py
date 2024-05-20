@@ -44,7 +44,6 @@ class TelaVenda:
         print('FUNCIONÁRIO DA VENDA: ', dados_venda['funcionario'])
         print('REFEIÇÕES DA VENDA: ', dados_venda['refeicoes'])
         print('BEBIDAS DA VENDA: ', dados_venda['bebidas'])
-        print('VALOR DA VENDA: ', dados_venda['total'])
         print('\n')
     
     def seleciona_venda(self):
