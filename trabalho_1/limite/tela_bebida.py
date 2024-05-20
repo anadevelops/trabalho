@@ -26,7 +26,7 @@ class TelaBebida():
         vegan = input("Vegano: ")
         gluten = input("Gluten: ")
         lactose = input("Lactose: ")
-        grau_alcoolico = input("Grau alcoolico: ")
+        grau_alcoolico = float(input("Grau alcoolico: "))
         ingrediente1 = int(input("Código do ingrediente 1: "))
         ingrediente2 = int(input("Código do ingrediente 2: "))
 
@@ -43,6 +43,7 @@ class TelaBebida():
   def mostra_bebida(self, dados_bebida):
     print("--------- BEBIDA REGISTRADA ----------")
     print("NOME DA BEBIDA: ", dados_bebida["nome"])
+    print("CUSTO DA BEBIDA: ", dados_bebida["custo"])
     print("PRECO DA BEBIDA: ", dados_bebida["preco"])
     print("GRAU ALCOOLICO: ", dados_bebida["grau_alcoolico"])
     print("INGREDIENTE 1: ", dados_bebida["ingrediente1"])
