@@ -37,6 +37,10 @@ class ControladorVendas:
         if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
             venda = Venda(cliente, funcionario, refeicao, bebida)
             venda.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_venda()
+            for refeicao in venda.refeicoes:
+                venda.valor += refeicao.preco
+            for bebida in venda.bebidas:
+                venda.valor += bebida.preco
             self.__vendas.append(venda)
             self.__tela_venda.mostra_msg('Venda criada')
         else:
@@ -48,8 +52,9 @@ class ControladorVendas:
                 self.__tela_venda.mostra_venda({'codigo': venda.codigo,
                                                 'cliente': venda.cliente.nome,
                                                 'funcionario': venda.funcionario.nome,
-                                                'refeicoes': venda.refeicoes,
-                                                'bebidas': venda.bebidas})
+                                                'refeicoes': [refeicao.nome for refeicao in venda.refeicoes],
+                                                'bebidas': [bebida.nome for bebida in venda.bebidas],
+                                                'valor': venda.valor})
         else:
             self.__tela_venda.mostra_msg('Lista vazia')
     
