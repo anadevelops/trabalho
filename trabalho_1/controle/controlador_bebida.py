@@ -33,14 +33,30 @@ class ControladorBebida():
         ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(dados_bebida['ingrediente2'])
 
         if ing1 is not None and ing2 is not None:
-            nova_bebida = Bebida(dados_bebida["nome"],
-                                 dados_bebida["veget"], dados_bebida["vegan"],
-                                 dados_bebida["gluten"], dados_bebida["lactose"],
-                                ing1, ing2,
-                                dados_bebida["grau_alcoolico"])
-            nova_bebida.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_bebida()
-            self.__bebidas.append(nova_bebida)
-            self.__tela_bebida.mostra_mensagem("Bebida adicionada")
+
+            if (isinstance(dados_bebida["nome"], str) and
+                isinstance(dados_bebida["grau_alcoolico"], float)):
+
+                if (isinstance(self.verifica_booleano(dados_bebida["veget"]), bool) and
+                    isinstance(self.verifica_booleano(dados_bebida["vegan"]), bool) and
+                    isinstance(self.verifica_booleano(dados_bebida["gluten"]), bool) and
+                    isinstance(self.verifica_booleano(dados_bebida["lactose"]), bool)):
+
+                    nova_bebida = Bebida(dados_bebida["nome"],
+                                        dados_bebida["veget"], dados_bebida["vegan"],
+                                        dados_bebida["gluten"], dados_bebida["lactose"],
+                                        ing1, ing2,
+                                        dados_bebida["grau_alcoolico"])
+                    nova_bebida.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_bebida()
+                    self.__bebidas.append(nova_bebida)
+                    self.__tela_bebida.mostra_mensagem("Bebida adicionada")
+                
+                else:
+                    self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível criar bebida")
+            
+            else:
+                self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível criar bebida")
+        
         else:
             self.__tela_bebida.mostra_mensagem('Dados incorretos: impossível criar bebida')
 
@@ -51,19 +67,39 @@ class ControladorBebida():
 
         if(bebida is not None):
             novos_dados_bebida = self.__tela_bebida.pega_dados_bebida()
-            bebida.nome = novos_dados_bebida["nome"]
-            bebida.veget = novos_dados_bebida["veget"]
-            bebida.vegan = novos_dados_bebida["vegan"]
-            bebida.gluten = novos_dados_bebida["gluten"]
-            bebida.lactose = novos_dados_bebida["lactose"]
-            bebida.grau_alcoolico = novos_dados_bebida["grau_alcoolico"]
 
             ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente1'])
             ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente2'])
+            
+            if ing1 is not None and ing2 is not None:
 
-            bebida.altera_primeiro_ing(ing1)
-            bebida.altera_segundo_ing(ing2)
-            self.lista_bebida()
+                if (isinstance(novos_dados_bebida["nome"], str) and
+                isinstance(novos_dados_bebida["grau_alcoolico"], float)):
+                    
+                    if (isinstance(self.verifica_booleano(novos_dados_bebida["veget"]), bool) and
+                    isinstance(self.verifica_booleano(novos_dados_bebida["vegan"]), bool) and
+                    isinstance(self.verifica_booleano(novos_dados_bebida["gluten"]), bool) and
+                    isinstance(self.verifica_booleano(novos_dados_bebida["lactose"]), bool)):
+                        
+                        bebida.nome = novos_dados_bebida["nome"]
+                        bebida.veget = novos_dados_bebida["veget"]
+                        bebida.vegan = novos_dados_bebida["vegan"]
+                        bebida.gluten = novos_dados_bebida["gluten"]
+                        bebida.lactose = novos_dados_bebida["lactose"]
+                        bebida.grau_alcoolico = novos_dados_bebida["grau_alcoolico"]
+
+                        bebida.altera_primeiro_ing(ing1)
+                        bebida.altera_segundo_ing(ing2)
+                        self.lista_bebida()
+                    else:
+                        self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível alterar bebida")
+                
+                else:
+                    self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível alterar bebida")   
+            
+            else:
+                self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível alterar bebida")     
+        
         else:
             self.__tela_bebida.mostra_mensagem("ATENCAO: Bebida não existente")
 
@@ -73,6 +109,7 @@ class ControladorBebida():
                 ing1 = bebida.pega_primeiro_ing()
                 ing2 = bebida.pega_segundo_ing()
                 self.__tela_bebida.mostra_bebida({"nome": bebida.nome,
+                                                    "custo": bebida.custo,
                                                     "preco": bebida.preco,
                                                     "codigo": bebida.codigo,
                                                     "veget": bebida.veget, "vegan": bebida.vegan,
@@ -94,6 +131,14 @@ class ControladorBebida():
         else:
             self.__tela_bebida.mostra_mensagem("ATENCAO: Bebida não existente")
 
+    def verifica_booleano(self, dado_em_string):
+        if dado_em_string.lower() == 'true':
+            return True
+        elif dado_em_string.lower() == 'false':
+            return False
+        else:
+            return None
+
     def retornar(self):
         self.__controlador_sistema.abre_tela()
 
@@ -104,3 +149,5 @@ class ControladorBebida():
         continua = True
         while continua:
             lista_opcoes[self.__tela_bebida.tela_opcoes()]()
+
+    

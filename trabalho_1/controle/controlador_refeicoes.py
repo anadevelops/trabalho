@@ -33,13 +33,28 @@ class ControladorRefeicao():
         ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(dados_refeicao['ingrediente2'])
 
         if ing1 is not None and ing2 is not None:
-            nova_refeicao = Refeicao(dados_refeicao["nome"],
-                                dados_refeicao["veget"], dados_refeicao["vegan"], 
-                                dados_refeicao["gluten"], dados_refeicao["lactose"],
-                                ing1, ing2)
-            nova_refeicao.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_refeicao()
-            self.__refeicoes.append(nova_refeicao)
-            self.__tela_refeicao.mostra_mensagem("Refeicao adicionada")
+
+            if (isinstance(dados_refeicao["nome"], str)):
+
+                if (isinstance(self.verifica_booleano(dados_refeicao["veget"]), bool) and
+                    isinstance(self.verifica_booleano(dados_refeicao["vegan"]), bool) and
+                    isinstance(self.verifica_booleano(dados_refeicao["gluten"]), bool) and
+                    isinstance(self.verifica_booleano(dados_refeicao["lactose"]), bool)):
+                        
+                        nova_refeicao = Refeicao(dados_refeicao["nome"],
+                                            dados_refeicao["veget"], dados_refeicao["vegan"], 
+                                            dados_refeicao["gluten"], dados_refeicao["lactose"],
+                                            ing1, ing2)
+                        nova_refeicao.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_refeicao()
+                        self.__refeicoes.append(nova_refeicao)
+                        self.__tela_refeicao.mostra_mensagem("Refeicao adicionada")
+
+                else:
+                    self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível criar refeicao")
+            
+            else:
+                self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível criar refeicao")
+
         else:
             self.__tela_refeicao.mostra_mensagem('Dados incorretos: impossível criar refeicao')
 
@@ -50,18 +65,37 @@ class ControladorRefeicao():
 
         if(refeicao is not None):
             novos_dados_refeicao = self.__tela_refeicao.pega_dados_refeicao()
-            refeicao.nome = novos_dados_refeicao["nome"]
-            refeicao.veget = novos_dados_refeicao["veget"]
-            refeicao.vegan = novos_dados_refeicao["vegan"]
-            refeicao.gluten = novos_dados_refeicao["gluten"]
-            refeicao.lactose = novos_dados_refeicao["lactose"]
 
             ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_refeicao['ingrediente1'])
             ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_refeicao['ingrediente2'])
 
-            refeicao.altera_primeiro_ing(ing1)
-            refeicao.altera_segundo_ing(ing2)
-            self.lista_refeicao()
+            if ing1 is not None and ing2 is not None:
+
+                if (isinstance(novos_dados_refeicao["nome"], str)):
+
+                    if (isinstance(self.verifica_booleano(novos_dados_refeicao["veget"]), bool) and
+                    isinstance(self.verifica_booleano(novos_dados_refeicao["vegan"]), bool) and
+                    isinstance(self.verifica_booleano(novos_dados_refeicao["gluten"]), bool) and
+                    isinstance(self.verifica_booleano(novos_dados_refeicao["lactose"]), bool)):
+
+                        refeicao.nome = novos_dados_refeicao["nome"]
+                        refeicao.veget = novos_dados_refeicao["veget"]
+                        refeicao.vegan = novos_dados_refeicao["vegan"]
+                        refeicao.gluten = novos_dados_refeicao["gluten"]
+                        refeicao.lactose = novos_dados_refeicao["lactose"]
+
+                        refeicao.altera_primeiro_ing(ing1)
+                        refeicao.altera_segundo_ing(ing2)
+                        self.lista_refeicao()
+                    else:
+                        self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível alterar bebida")
+                
+                else:
+                    self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível alterar bebida")   
+            
+            else:
+                self.__tela_bebida.mostra_mensagem("Dados incorretos: impossível alterar bebida")
+
         else:
             self.__tela_refeicao.mostra_mensagem("ATENCAO: Refeicao não existente")
 
@@ -91,6 +125,14 @@ class ControladorRefeicao():
             self.lista_refeicao()
         else:
             self.__tela_refeicao.mostra_mensagem("ATENCAO: Refeicoes não existente")
+
+    def verifica_booleano(self, dado_em_string):
+        if dado_em_string.lower() == 'true':
+            return True
+        elif dado_em_string.lower() == 'false':
+            return False
+        else:
+            return None
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()
