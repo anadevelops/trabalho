@@ -110,14 +110,14 @@ class ControladorVendas:
         return None
 
     def vendas_abertas(self):
-        if len(self.__vendas) > 0:
-            for venda in self.__vendas:
-                if venda.aberta is True:
-                    self.__tela_venda.mostra_venda({'codigo': venda.codigo,
-                                                    'cliente': venda.cliente,
-                                                    'funcionario': venda.funcionario,
-                                                    'refeicoes': venda.refeicoes,
-                                                    'bebidas': venda.bebidas})
+        vendas_abertas = [venda for venda in self.__vendas if venda.aberta is True]
+        if len(vendas_abertas) > 0:
+            for venda in vendas_abertas:
+                self.__tela_venda.mostra_venda({'codigo': venda.codigo,
+                                                'cliente': venda.cliente.nome,
+                                                'funcionario': venda.funcionario.nome,
+                                                'refeicoes': venda.refeicoes,
+                                                'bebidas': venda.bebidas})
         else:
             self.__tela_venda.mostra_msg('Lista vazia')
 
