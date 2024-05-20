@@ -37,6 +37,10 @@ class ControladorVendas:
         if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
             venda = Venda(cliente, funcionario, refeicao, bebida)
             venda.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_venda()
+            for refeicao in venda.refeicoes:
+                venda.valor_total += refeicao.preco
+            for bebida in venda.bebidas:
+                venda.valor_total += bebida.preco
             self.__vendas.append(venda)
             self.__tela_venda.mostra_msg('Venda criada')
         else:
@@ -81,45 +85,38 @@ class ControladorVendas:
         else:
             self.__tela_venda.mostra_msg('Venda inexistente')
 
-    def vendas_p_cliente(self, codigo):
+    def vendas_p_cliente(self):
         self.__controlador_sistema.controlador_cliente.lista_clientes()
-        self.__tela_venda.seleciona_cliente()
-        cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(codigo)
+        cod_cli = self.__tela_venda.seleciona_cliente()
+        cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(cod_cli)
         if cliente is not None:
             for venda in self.__vendas:
                 if venda.cliente == cliente:
-                    return venda
+                    self.__tela_venda.mostra_venda({'codigo': venda.codigo,
+                                                    'cliente': venda.cliente.nome,
+                                                    'funcionario': venda.funcionario.nome,
+                                                    'refeicoes': venda.refeicoes,
+                                                    'bebidas': venda.bebidas})
         return None
 
-    def vendas_p_funcionario(self, cpf):
+    def vendas_p_funcionario(self):
         self.__controlador_sistema.controlador_funcionario.lista_funcionarios()
-        self.__tela_venda.seleciona_funcionario()
-        funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(cpf)
+        cpf_func = self.__tela_venda.seleciona_funcionario()
+        funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(cpf_func)
         if funcionario is not None:
             for venda in self.__vendas:
                 if venda.funcionario == funcionario:
-                    return venda
+                    self.__tela_venda.mostra_venda({'codigo': venda.codigo,
+                                                    'cliente': venda.cliente.nome,
+                                                    'funcionario': venda.funcionario.nome,
+                                                    'refeicoes': venda.refeicoes,
+                                                    'bebidas': venda.bebidas})
         return None
-
-    def ref_mais_vendida(self):
-        refeicoes = [venda.refeicoes for venda in self.__vendas]
-        count = Counter(refeicoes)
-        return max(count, key=count.get)
-
-    def beb_mais_vendida(self):
-        bebidas = [venda.bebidas for venda in self.__vendas]
-        count = Counter(bebidas)
-        return max(count, key=count.get)
-
-    def func_do_mes(self):
-        funcionarios = [venda.funcionario for venda in self.__vendas]
-        count = Counter(funcionarios)
-        return max(count, key=count.get)
 
     def vendas_abertas(self):
         if len(self.__vendas) > 0:
             for venda in self.__vendas:
-                if venda.aberta == True:
+                if venda.aberta is True:
                     self.__tela_venda.mostra_venda({'codigo': venda.codigo,
                                                     'cliente': venda.cliente,
                                                     'funcionario': venda.funcionario,
@@ -161,12 +158,9 @@ class ControladorVendas:
                         4: self.excluir_venda,
                         5: self.vendas_p_funcionario,
                         6: self.vendas_p_cliente,
-                        7: self.ref_mais_vendida,
-                        8: self.beb_mais_vendida,
-                        9: self.func_do_mes,
-                        10: self.vendas_abertas,
-                        11: self.vendas_encerradas,
-                        12: self.encerrar_venda,
+                        7: self.vendas_abertas,
+                        8: self.vendas_encerradas,
+                        9: self.encerrar_venda,
                         0: self.retornar}
         
         continua = True

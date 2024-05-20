@@ -30,9 +30,9 @@ class TelaCliente:
 
     def mostra_cliente(self, dados_cliente):
         print('---------- CLIENTE REGISTRADO ----------')
-        print('Nome do cliente: ', dados_cliente['nome'])
-        print('CPF do cliente: ', dados_cliente['cpf'])
-        print('Código do cliente: ', dados_cliente['codigo'])
+        print('NOME DO CLIENTE: ', dados_cliente['nome'])
+        print('CPF DO CLIENTE: ', dados_cliente['cpf'])
+        print('CÓDIGO DO CLIENTE: ', dados_cliente['codigo'])
         print('\n')
     
     def seleciona_cliente(self):

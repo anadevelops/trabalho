@@ -11,6 +11,7 @@ class Venda:
     def __init__(self, cliente: Cliente, funcionario: Funcionario, refeicao: Refeicao, bebida: Bebida):
         self.__codigo = 0
         self.__aberta = True
+        self.__valor_total = 0.0
         self.__cliente = cliente
         self.__funcionario = funcionario
         self.__refeicoes = []
@@ -29,6 +30,10 @@ class Venda:
     @property
     def aberta(self):
         return self.__aberta
+
+    @property
+    def valor_total(self):
+        return self.__valor_total
 
     @property
     def cliente(self):
@@ -53,6 +58,10 @@ class Venda:
     @aberta.setter
     def aberta(self, ab):
         self.__aberta = ab
+
+    @valor_total.setter
+    def valor_total(self, val):
+        self.__valor_total = val
 
     @cliente.setter
     def cliente(self, cli):

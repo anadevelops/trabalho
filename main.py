@@ -18,7 +18,7 @@ from trabalho_1.entidade.auxiliar import Auxiliar
 
 if __name__ == '__main__':
     ControladorSistema()
-    cliente = Cliente('Ana', 1234)
+    '''cliente = Cliente('Ana', 1234)
     funcionario = Funcionario('Clara', 4567, 1500, 'garconete', 'servidão corintians', 'pantanal', 'florianópolis')
     suprimento1 = Suprimento('limão', 1.50)
     suprimento2 = Suprimento('gelo', 0.5)
@@ -38,5 +38,5 @@ if __name__ == '__main__':
     ControladorSuprimento.suprimentos = suprimento5
     ControladorSuprimento.suprimentos = suprimento6
     ControladorRefeicao.refeicoes = refeicao
-    ControladorBebida.bebidas = bebida
+    ControladorBebida.bebidas = bebida'''
     ControladorSistema().inicializa_sistema()

@@ -7,12 +7,9 @@ class TelaVenda:
         print('4 - Excluir venda')
         print('5 - Vendas por funcionário')
         print('6 - Vendas por cliente')
-        print('7 - Refeição mais vendida')
-        print('8 - Bebida mais vendida')
-        print('9 - Funcionário com mais vendas')
-        print('10 - Vendas em aberto')
-        print('11 - Vendas encerradas')
-        print('12 - Encerrar venda')
+        print('7 - Vendas em aberto')
+        print('8 - Vendas encerradas')
+        print('9 - Encerrar venda')
         print('0 - Retornar') 
 
         try:
@@ -42,11 +39,11 @@ class TelaVenda:
 
     def mostra_venda(self, dados_venda):
         print('---------- VENDA REGISTRADA ----------')
-        print('Código da venda: ', dados_venda['codigo'])
-        print('Cliente da venda: ' , dados_venda['cliente'])
-        print('Funcionário da venda: ', dados_venda['funcionario'])
-        print('Refeições da venda: ', dados_venda['refeicoes'])
-        print('Bebidas da venda: ', dados_venda['bebidas'])
+        print('CÓDIGO DA VENDA: ', dados_venda['codigo'])
+        print('CLIENTE DA VENDA: ' , dados_venda['cliente'])
+        print('FUNCIONÁRIO DA VENDA: ', dados_venda['funcionario'])
+        print('REFEIÇÕES DA VENDA: ', dados_venda['refeicoes'])
+        print('BEBIDAS DA VENDA: ', dados_venda['bebidas'])
         print('\n')
     
     def seleciona_venda(self):

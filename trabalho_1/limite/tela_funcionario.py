@@ -6,7 +6,6 @@ class TelaFuncionario:
         print('2 - Atualizar funcionário')
         print('3 - Listar funcionários')
         print('4 - Excluir funcionário')
-        print('5 - Calcular comissão')
         print('0 - Retornar')
         
         try:
@@ -44,12 +43,12 @@ class TelaFuncionario:
 
     def mostra_funcionario(self, dados_funcionario):
         print('---------- FUNCIONÁRIO REGISTRADO ----------')
-        print('Nome do funcionário: ', dados_funcionario['nome'])
-        print('CPF do funcionário: ', dados_funcionario['cpf'])
-        print('Salário do funcionário: ', dados_funcionario['salario'])
-        print('Função do funcionário: ', dados_funcionario['funcao'])
-        print('Endereço do funcionário: ', dados_funcionario['endereco'])
-        print('Número de vendas do funcionário: ', dados_funcionario['num_vendas'])
+        print('NOME DO FUNCIONÁRIO: ', dados_funcionario['nome'])
+        print('CPF DO FUNCIONÁRIO: ', dados_funcionario['cpf'])
+        print('SALÁRIO DO FUNCIONÁRIO: ', dados_funcionario['salario'])
+        print('FUNÇÃO DO FUNCIONÁRIO: ', dados_funcionario['funcao'])
+        print('EDENREÇO DO FUNCIONÁRIO: ', dados_funcionario['endereco'])
+        print('NÚMERO DE VENDAS DO FUNCIONÁRIO: ', dados_funcionario['num_vendas'])
         print('\n')
 
     def seleciona_funcionario(self):
