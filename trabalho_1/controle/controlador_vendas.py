@@ -37,10 +37,6 @@ class ControladorVendas:
         if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
             venda = Venda(cliente, funcionario, refeicao, bebida)
             venda.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_venda()
-            for refeicao in venda.refeicoes:
-                venda.valor_total += refeicao.preco
-            for bebida in venda.bebidas:
-                venda.valor_total += bebida.preco
             self.__vendas.append(venda)
             self.__tela_venda.mostra_msg('Venda criada')
         else:
@@ -66,8 +62,8 @@ class ControladorVendas:
             novos_dados_venda = self.__tela_venda.pega_dados_venda()
             venda.cliente = novos_dados_venda['cliente']
             venda.funcionario = novos_dados_venda['funcionario']
-            venda.refeicoes = novos_dados_venda['refeicoes']
-            venda.bebidas = novos_dados_venda['bebidas']
+            venda.refeicoes = novos_dados_venda['refeicao']
+            venda.bebidas = novos_dados_venda['bebida']
             self.__tela_venda.mostra_msg('Venda alterada')
             self.lista_vendas()
         else:
@@ -126,28 +122,28 @@ class ControladorVendas:
             self.__tela_venda.mostra_msg('Lista vazia')
 
     def vendas_encerradas(self):
-        if len(self.__vendas) > 0:
-            for venda in self.__vendas:
-                if venda.aberta == False:
-                    self.__tela_venda.mostra_venda({'codigo': venda.codigo,
-                                                    'cliente': venda.cliente,
-                                                    'funcionario': venda.funcionario,
-                                                    'refeicoes': venda.refeicoes,
-                                                    'bebidas': venda.bebidas})
+        vendas_encerradas = [venda for venda in self.__vendas if venda.aberta is False]
+        if len(vendas_encerradas) > 0:
+            for venda in vendas_encerradas:
+                self.__tela_venda.mostra_venda({'codigo': venda.codigo,
+                                                'cliente': venda.cliente.nome,
+                                                'funcionario': venda.funcionario.nome,
+                                                'refeicoes': venda.refeicoes,
+                                                'bebidas': venda.bebidas})
         else:
             self.__tela_venda.mostra_msg('Lista vazia')
 
-    def encerrar_venda(self, codigo):
-        venda = self.pega_venda_p_codigo(codigo)
+    def encerrar_venda(self):
+        self.lista_vendas()
+        cod_venda = self.__tela_venda.seleciona_venda()
+        venda = self.pega_venda_p_codigo(cod_venda)
         if venda is not None:
-            if venda.aberta == True:
-                venda.aberta = False
-                return venda
-            else:
-                self.__tela_venda.mostra_msg('Venda já encerrada')
+            for vend in self.__vendas:
+                if vend.codigo == venda.codigo:
+                    vend.aberta = False
+                    self.__tela_venda.mostra_msg('Venda encerrada')
         else:
             self.__tela_venda.mostra_msg('Venda inexistente')
-
     def retornar(self):
         self.__controlador_sistema.abre_tela()
 
