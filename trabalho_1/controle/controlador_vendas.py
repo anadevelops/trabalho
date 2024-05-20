@@ -49,7 +49,7 @@ class ControladorVendas:
                                                 'cliente': venda.cliente.nome,
                                                 'funcionario': venda.funcionario.nome,
                                                 'refeicoes': venda.refeicoes,
-                                                'bebidas': venda.bebidas,)
+                                                'bebidas': venda.bebidas})
         else:
             self.__tela_venda.mostra_msg('Lista vazia')
     
