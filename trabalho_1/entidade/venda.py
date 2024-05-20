@@ -45,11 +45,11 @@ class Venda:
 
     @property
     def refeicoes(self):
-        return [refeicao for refeicao in self.__refeicoes]
+        return [refeicao.nome for refeicao in self.__refeicoes]
 
     @property
     def bebidas(self):
-        return [bebida for bebida in self.__bebidas]
+        return [bebida.nome for bebida in self.__bebidas]
 
     @codigo.setter
     def codigo(self, cod):
