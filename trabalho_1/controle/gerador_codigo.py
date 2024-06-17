@@ -1,3 +1,5 @@
+from trabalho_1.DAOs.dao import DAO
+
 class GeradorCodigo:
     def __init__(self):
         self.__cod_venda = 0
