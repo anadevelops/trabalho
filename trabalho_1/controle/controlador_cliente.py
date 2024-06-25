@@ -36,9 +36,7 @@ class ControladorCliente:
     def lista_clientes(self):
         dados_cliente = []
         for cli in self.__cliente_DAO.get_all():
-            print(cli.nome, cli.cpf, cli.codigo)
             dados_cliente.append({'nome': cli.nome, 'cpf': cli.cpf, 'codigo': cli.codigo})
-            print(dados_cliente)
         self.__tela_cliente.mostra_cliente(dados_cliente)
 
     def altera_cliente(self):

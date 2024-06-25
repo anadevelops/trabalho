@@ -49,6 +49,7 @@ class TelaCliente:
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
         self.__window = sg.Window('Sistema de livros').Layout(layout)
+
     def pega_dados_cliente(self):
         sg.ChangeLookAndFeel('DarkAmber')
         layout = [
@@ -69,21 +70,21 @@ class TelaCliente:
     def mostra_cliente(self, dados_cliente):
         string_todos_clientes = ""
         for dado in dados_cliente:
-            string_todos_clientes = string_todos_clientes + "NOME DO AMIGO: " + dado["nome"] + '\n'
-            string_todos_clientes = string_todos_clientes + "FONE DO AMIGO: " + str(dado["cpf"]) + '\n'
-            string_todos_clientes = string_todos_clientes + "CPF DO AMIGO: " + str(dado["codigo"]) + '\n\n'
+            string_todos_clientes = string_todos_clientes + "NOME DO CLIENTE: " + dado["nome"] + '\n'
+            string_todos_clientes = string_todos_clientes + "CPF DO CLIENTE: " + str(dado["cpf"]) + '\n'
+            string_todos_clientes = string_todos_clientes + "CÓDIGO DO CLIENTE: " + str(dado["codigo"]) + '\n\n'
 
-        sg.Popup('-------- LISTA DE AMIGOS ----------', string_todos_clientes)
+        sg.Popup('-------- LISTA DE CLIENTES ----------', string_todos_clientes)
 
     def seleciona_cliente(self):
         sg.ChangeLookAndFeel('DarkAmber')
         layout = [
-            [sg.Text('-------- SELECIONAR AMIGO ----------', font=("Helvica", 25))],
-            [sg.Text('Digite o código do amigo que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('-------- SELECIONAR CLIENTE ----------', font=("Helvica", 25))],
+            [sg.Text('Digite o código do cliente que deseja selecionar:', font=("Helvica", 15))],
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='cpf')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona amigo').Layout(layout)
+        self.__window = sg.Window('Seleciona cliente').Layout(layout)
 
         button, values = self.open()
         cpf = int(values['cpf'])

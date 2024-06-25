@@ -5,23 +5,20 @@ sys.path.insert(0,os.path.abspath(os.curdir))
 from collections import defaultdict, Counter
 from trabalho_1.entidade.venda import Venda
 from trabalho_1.limite.tela_venda import TelaVenda
+from trabalho_1.DAOs.venda_dao import VendaDAO
 
 
 class ControladorVendas:
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
-        self.__vendas = []
+        self.__venda_DAO = VendaDAO()
         self.__tela_venda = TelaVenda()
 
     def pega_venda_p_codigo(self, codigo):
-        for venda in self.__vendas:
+        for venda in self.__venda_DAO.get_all():
             if venda.codigo == codigo:
                 return venda
         return None
-
-    @property
-    def vendas(self):
-      return [venda for venda in self.__vendas]
 
     def incluir_venda(self):
         self.__controlador_sistema.controlador_funcionario.lista_funcionarios()
