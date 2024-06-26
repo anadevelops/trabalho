@@ -6,7 +6,7 @@ from collections import defaultdict, Counter
 from trabalho_1.entidade.venda import Venda
 from trabalho_1.limite.tela_venda import TelaVenda
 from trabalho_1.DAOs.venda_dao import VendaDAO
-
+import random
 
 class ControladorVendas:
     def __init__(self, controlador_sistema):
@@ -33,23 +33,22 @@ class ControladorVendas:
         bebida = self.__controlador_sistema.controlador_bebida.pega_bebida_por_codigo(dados_venda['bebida'])
         if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
             venda = Venda(cliente, funcionario, refeicao, bebida)
-            venda.codigo = self.__controlador_sistema.gerador_codigo.gera_cod_venda()
-            self.__vendas.append(venda)
+            venda.codigo = random.randint(1, 1000)
+            self.__venda_DAO.add(venda)
             self.__tela_venda.mostra_msg('Venda criada')
         else:
             self.__tela_venda.mostra_msg('Dados inválidos')
 
     def lista_vendas(self):
-        if len(self.__vendas) > 0:
-            for venda in self.__vendas:
-                self.__tela_venda.mostra_venda({'codigo': venda.codigo,
+        dados_venda = []
+        for venda in self.__venda_DAO.get_all():
+            dados_venda.append({'codigo': venda.codigo,
                                                 'cliente': venda.cliente.nome,
                                                 'funcionario': venda.funcionario.nome,
                                                 'refeicoes': venda.refeicoes,
                                                 'bebidas': venda.bebidas})
-        else:
-            self.__tela_venda.mostra_msg('Lista vazia')
-    
+        self.__tela_venda.mostra_venda(dados_venda)
+
     def altera_venda(self):
         self.lista_vendas()
         cod_venda = self.__tela_venda.seleciona_venda()
@@ -61,6 +60,7 @@ class ControladorVendas:
             venda.funcionario = novos_dados_venda['funcionario']
             venda.refeicoes = novos_dados_venda['refeicao']
             venda.bebidas = novos_dados_venda['bebida']
+            self.__venda_DAO.update(venda)
             self.__tela_venda.mostra_msg('Venda alterada')
             self.lista_vendas()
         else:
@@ -72,7 +72,7 @@ class ControladorVendas:
         venda = self.pega_venda_p_codigo(cod_venda)
 
         if venda is not None:
-            self.__vendas.remove(venda)
+            self.__venda_DAO.remove(venda.codigo)
             self.__tela_venda.mostra_msg('Venda removida')
             self.lista_vendas()
         else:
@@ -83,7 +83,7 @@ class ControladorVendas:
         cod_cli = self.__tela_venda.seleciona_cliente()
         cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(cod_cli)
         if cliente is not None:
-            for venda in self.__vendas:
+            for venda in self.__venda_DAO.get_all():
                 if venda.cliente == cliente:
                     self.__tela_venda.mostra_venda({'codigo': venda.codigo,
                                                     'cliente': venda.cliente.nome,
@@ -97,7 +97,7 @@ class ControladorVendas:
         cpf_func = self.__tela_venda.seleciona_funcionario()
         funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(cpf_func)
         if funcionario is not None:
-            for venda in self.__vendas:
+            for venda in self.__venda_DAO.get_all():
                 if venda.funcionario == funcionario:
                     self.__tela_venda.mostra_venda({'codigo': venda.codigo,
                                                     'cliente': venda.cliente.nome,
@@ -107,7 +107,7 @@ class ControladorVendas:
         return None
 
     def vendas_abertas(self):
-        vendas_abertas = [venda for venda in self.__vendas if venda.aberta is True]
+        vendas_abertas = [venda for venda in self.__venda_DAO.get_all() if venda.aberta is True]
         if len(vendas_abertas) > 0:
             for venda in vendas_abertas:
                 self.__tela_venda.mostra_venda({'codigo': venda.codigo,
@@ -119,7 +119,7 @@ class ControladorVendas:
             self.__tela_venda.mostra_msg('Lista vazia')
 
     def vendas_encerradas(self):
-        vendas_encerradas = [venda for venda in self.__vendas if venda.aberta is False]
+        vendas_encerradas = [venda for venda in self.__venda_DAO.get_all() if venda.aberta is False]
         if len(vendas_encerradas) > 0:
             for venda in vendas_encerradas:
                 self.__tela_venda.mostra_venda({'codigo': venda.codigo,
@@ -135,7 +135,7 @@ class ControladorVendas:
         cod_venda = self.__tela_venda.seleciona_venda()
         venda = self.pega_venda_p_codigo(cod_venda)
         if venda is not None:
-            for vend in self.__vendas:
+            for vend in self.__venda_DAO.get_all():
                 if vend.codigo == venda.codigo:
                     vend.aberta = False
                     self.__tela_venda.mostra_msg('Venda encerrada')

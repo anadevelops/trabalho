@@ -35,13 +35,14 @@ class TelaSistema:
         print('5 - Suprimentos')
         print('6 - Vendas')
         print('0 - Encerrar sistema')
-        '''
+        
         try:
             opcao = int(input('Escolha a opção: '))
         except ValueError:
             self.mostra_mensagem('Formato de entrada está incorreto. Tente novamente')
         else:
-            return opcao
+            return opcao'''
+
     def close(self):
         self.__window.Close()
 

@@ -15,7 +15,6 @@ class ControladorCliente:
         self.__controlador_sistema = controlador_sistema
 
     def pega_cliente_p_cod(self, cod: int):
-        #for cliente in self.__clientes:
         for cliente in self.__cliente_DAO.get_all():
             if cliente.codigo == cod:
                 return cliente
@@ -27,7 +26,6 @@ class ControladorCliente:
                                 dados_cliente['cpf'])
         new_cli.codigo = random.randint(1, 1000)
         if isinstance(new_cli, Cliente):
-            #self.__clientes.append(new_cli)
             self.__cliente_DAO.add(new_cli)
             self.__tela_cliente.mostra_msg('Cliente criado')
         else:
