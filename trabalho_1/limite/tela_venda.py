@@ -110,13 +110,13 @@ class TelaVenda:
         layout = [
             [sg.Text('-------- SELECIONAR VENDA ----------', font=("Helvica", 25))],
             [sg.Text('Digite o código da venda que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
         self.__window = sg.Window('Seleciona venda').Layout(layout)
 
         button, values = self.open()
-        codigo = int(values['codigo'])
+        codigo = values['codigo']
         self.close()
         return codigo
 
@@ -196,7 +196,7 @@ class TelaVenda:
         return codigo
 
     def mostra_msg(self, msg):
-        print(msg)
+        sg.popup("", msg)
 
     def close(self):
         self.__window.Close()

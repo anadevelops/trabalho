@@ -6,6 +6,7 @@ from trabalho_1.entidade.funcionario import Funcionario
 from trabalho_1.entidade.endereco import Endereco
 from trabalho_1.limite.tela_funcionario import TelaFuncionario
 from trabalho_1.DAOs.funcionario_dao import FuncionarioDAO
+from trabalho_1.excecoes.dados_invalidos_exception import DadosInvalidosException
 
 
 class ControladorFuncionario:
@@ -30,11 +31,14 @@ class ControladorFuncionario:
                                 dados_funcionario['bairro'],
                                 dados_funcionario['cidade'])
         new_func.num_vendas = 0
-        if isinstance(new_func, Funcionario):
-            self.__funcionario_DAO.add(new_func)
-            self.__tela_funcionario.mostra_msg('Funcionário criado')
-        else:
-            self.__tela_funcionario.mostra_msg('Dados incorretos: impossível criar funcionário')
+        try:
+            if isinstance(new_func, Funcionario):
+                self.__funcionario_DAO.add(new_func)
+                self.__tela_funcionario.mostra_msg('Funcionário criado')
+            else:
+                raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
 
     def lista_funcionarios(self):
         dados_funcionario = []
@@ -74,6 +78,12 @@ class ControladorFuncionario:
             self.lista_funcionarios()
         else:
             self.__tela_funcionario.mostra_msg('Funcionário inexistente')
+
+    def incrementa_vendas(self, funcionario):
+        func = self.pega_funcionario_p_cpf(funcionario)
+
+        if func is not None:
+            func.num_vendas += 1
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()
