@@ -70,9 +70,9 @@ class TelaFuncionario:
 
         button, values = self.open()
         nome = values['nome']
-        cpf = int(values['cpf'])
+        cpf = values['cpf']
         funcao = values['funcao']
-        salario = int(values['salario'])
+        salario = values['salario']
         rua = values['rua']
         bairro = values['bairro']
         cidade = values['cidade']
@@ -103,7 +103,7 @@ class TelaFuncionario:
         button, values = self.open()
         nome = values['nome']
         funcao = values['funcao']
-        salario = int(values['salario'])
+        salario = values['salario']
         rua = values['rua']
         bairro = values['bairro']
         cidade = values['cidade']
@@ -140,7 +140,7 @@ class TelaFuncionario:
         self.__window = sg.Window('Seleciona funcionário').Layout(layout)
 
         button, values = self.open()
-        cpf = int(values['cpf'])
+        cpf = values['cpf']
         self.close()
         return cpf
     

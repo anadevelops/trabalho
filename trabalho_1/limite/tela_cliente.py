@@ -87,7 +87,7 @@ class TelaCliente:
         self.__window = sg.Window('Seleciona cliente').Layout(layout)
 
         button, values = self.open()
-        cpf = int(values['cpf'])
+        cpf = values['cpf']
         self.close()
         return cpf
 

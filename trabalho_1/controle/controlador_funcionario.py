@@ -7,6 +7,8 @@ from trabalho_1.entidade.endereco import Endereco
 from trabalho_1.limite.tela_funcionario import TelaFuncionario
 from trabalho_1.DAOs.funcionario_dao import FuncionarioDAO
 from trabalho_1.excecoes.dados_invalidos_exception import DadosInvalidosException
+from trabalho_1.excecoes.lista_vazia_exception import ListaVaziaException
+from trabalho_1.excecoes.item_inexistente_exception import ItemInexistenteException
 
 
 class ControladorFuncionario:
@@ -16,10 +18,13 @@ class ControladorFuncionario:
         self.__controlador_sistema = controlador_sistema
 
     def pega_funcionario_p_cpf(self, cpf: int):
-        for funcionario in self.__funcionario_DAO.get_all():
-            if funcionario.cpf == cpf:
-                return funcionario
-        return None
+        try:
+            for funcionario in self.__funcionario_DAO.get_all():
+                if funcionario.cpf == cpf:
+                    return funcionario
+            raise ItemInexistenteException
+        except ItemInexistenteException as e:
+            self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
 
     def add_funcionario(self):
         dados_funcionario = self.__tela_funcionario.pega_dados_funcionario()
@@ -49,35 +54,56 @@ class ControladorFuncionario:
                                         'funcao': func.funcao,
                                         'endereco': func.endereco.rua + ', ' + func.endereco.bairro + ', ' + func.endereco.cidade,
                                         'num_vendas': func.num_vendas})
-        self.__tela_funcionario.mostra_funcionario(dados_funcionario)
+        try:
+            if len(dados_funcionario) > 0:
+                self.__tela_funcionario.mostra_funcionario(dados_funcionario)
+            else:
+                raise ListaVaziaException
+        except ListaVaziaException as e:
+            self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
+            return None
 
     def altera_funcionario(self):
-        self.lista_funcionarios()
-        cpf_func = self.__tela_funcionario.seleciona_funcionario()
-        func = self.pega_funcionario_p_cpf(cpf_func)
+        try:
+            if self.lista_funcionarios() is not None:
+                cpf_func = self.__tela_funcionario.seleciona_funcionario()
+                func = self.pega_funcionario_p_cpf(cpf_func)
 
-        if func is not None:
-            novos_dados_func = self.__tela_funcionario.pega_dados_funcionario_att()
-            func.nome = novos_dados_func['nome']
-            func.salario = novos_dados_func['salario']
-            func.rua = novos_dados_func['rua']
-            func.bairro = novos_dados_func['bairro']
-            func.cidade = novos_dados_func['cidade']
-            self.__funcionario_DAO.update(func)
-            self.lista_funcionarios()
-        else:
-            return self.__tela_funcionario.mostra_msg('Funcionário inexistente')
+                if func is not None:
+                    novos_dados_func = self.__tela_funcionario.pega_dados_funcionario_att()
+                    func.nome = novos_dados_func['nome']
+                    func.salario = novos_dados_func['salario']
+                    func.rua = novos_dados_func['rua']
+                    func.bairro = novos_dados_func['bairro']
+                    func.cidade = novos_dados_func['cidade']
+                    self.__funcionario_DAO.update(func)
+                    self.lista_funcionarios()
+                else:
+                    raise ItemInexistenteException
+            else:
+                raise ListaVaziaException
+        except ItemInexistenteException as e:
+            self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
+        except ListaVaziaException as e:
+            self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
 
     def del_funcionario(self):
-        self.lista_funcionarios()
-        cpf_func = self.__tela_funcionario.seleciona_funcionario()
-        func = self.pega_funcionario_p_cpf(cpf_func)
+        try:
+            if self.lista_funcionarios() is not None:
+                cpf_func = self.__tela_funcionario.seleciona_funcionario()
+                func = self.pega_funcionario_p_cpf(cpf_func)
 
-        if func is not None:
-            self.__funcionario_DAO.remove(func.cpf)
-            self.lista_funcionarios()
-        else:
-            self.__tela_funcionario.mostra_msg('Funcionário inexistente')
+                if func is not None:
+                    self.__funcionario_DAO.remove(func.cpf)
+                    self.lista_funcionarios()
+                else:
+                    raise ItemInexistenteException
+            else:
+                raise ListaVaziaException
+        except ItemInexistenteException as e:
+            self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
+        except ListaVaziaException as e:
+            self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
 
     def incrementa_vendas(self, funcionario):
         func = self.pega_funcionario_p_cpf(funcionario)

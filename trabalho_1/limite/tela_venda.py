@@ -84,10 +84,10 @@ class TelaVenda:
         self.__window = sg.Window('Sistema de livros').Layout(layout)
 
         button, values = self.open()
-        cliente = int(values['cliente'])
-        funcionario = int(values['funcionario'])
-        refeicao = int(values['refeicao'])
-        bebida = int(values['bebida'])
+        cliente = values['cliente']
+        funcionario = values['funcionario']
+        refeicao = values['refeicao']
+        bebida = values['bebida']
 
         self.close()
         return {"cliente": cliente, "funcionario": funcionario, 'refeicao': refeicao, 'bebida': bebida}
@@ -96,7 +96,7 @@ class TelaVenda:
     def mostra_venda(self, dados_venda):
         string_todas_vendas = ''
         for dado in dados_venda:
-            string_todas_vendas = string_todas_vendas + 'CÓDIGO DA VENDA: ' + dado['codigo'] + '\n'
+            string_todas_vendas = string_todas_vendas + 'CÓDIGO DA VENDA: ' + str(dado['codigo']) + '\n'
             string_todas_vendas = string_todas_vendas + 'CLIENTE DA VENDA: ' + dado['cliente'] + '\n'
             string_todas_vendas = string_todas_vendas + 'FUNCIONÁRIO DA VENDA: ' + dado['funcionario'] + '\n'
             string_todas_vendas = string_todas_vendas + 'REFEIÇÕES DA VENDA: ' + dado['refeicoes'] + '\n'
@@ -131,7 +131,7 @@ class TelaVenda:
         self.__window = sg.Window('Seleciona funcionário').Layout(layout)
 
         button, values = self.open()
-        cpf = int(values['cpf'])
+        cpf = values['cpf']
         self.close()
         return cpf
     
@@ -161,7 +161,7 @@ class TelaVenda:
         self.__window = sg.Window('Seleciona refeição').Layout(layout)
 
         button, values = self.open()
-        codigo = int(values['codigo'])
+        codigo = values['codigo']
         self.close()
         return codigo
 
@@ -176,7 +176,7 @@ class TelaVenda:
         self.__window = sg.Window('Seleciona bebida').Layout(layout)
 
         button, values = self.open()
-        codigo = int(values['codigo'])
+        codigo = values['codigo']
         self.close()
         return codigo
 
@@ -191,7 +191,7 @@ class TelaVenda:
         self.__window = sg.Window('Encerra venda').Layout(layout)
 
         button, values = self.open()
-        codigo = int(values['codigo'])
+        codigo = values['codigo']
         self.close()
         return codigo
 

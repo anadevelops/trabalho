@@ -22,37 +22,37 @@ class ControladorVendas:
             for venda in self.__venda_DAO.get_all():
                 if venda.codigo == codigo:
                     return venda
-                else:
-                    raise ItemInexistenteException
+            raise ItemInexistenteException
         except ItemInexistenteException as e:
             self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
 
     def incluir_venda(self):
         try:
-            if ((self.__controlador_sistema.controlador_funcionario.lista_funcionarios() is not None) and
-                (self.__controlador_sistema.controlador_cliente.lista_clientes() is not None) and
-                (self.__controlador_sistema.controlador_bebida.lista_bebida() is not None) and
-                (self.__controlador_sistema.controlador_refeicao.lista_refeicao() is not None)):
-                dados_venda = self.__tela_venda.pega_dados_venda()
+            self.__controlador_sistema.controlador_funcionario.lista_funcionarios()
+            self.__controlador_sistema.controlador_cliente.lista_clientes()
+            self.__controlador_sistema.controlador_bebida.lista_bebida()
+            self.__controlador_sistema.controlador_refeicao.lista_refeicao()
+            dados_venda = self.__tela_venda.pega_dados_venda()
 
-                cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(dados_venda['cliente'])
-                funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(dados_venda['funcionario'])
-                refeicao = self.__controlador_sistema.controlador_refeicao.pega_refeicao_por_codigo(dados_venda['refeicao'])
-                bebida = self.__controlador_sistema.controlador_bebida.pega_bebida_por_codigo(dados_venda['bebida'])
-                if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
-                    venda = Venda(cliente, funcionario, refeicao, bebida)
-                    venda.codigo = random.randint(1, 1000)
-                    self.__controlador_sistema.controlador_funcionario.incrementa_vendas(funcionario)
-                    self.__venda_DAO.add(venda)
-                    self.__tela_venda.mostra_msg('Venda criada')
-                else:
-                    raise DadosInvalidosException
+            cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(dados_venda['cliente'])
+            print(cliente)
+            funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(dados_venda['funcionario'])
+            print(funcionario)
+            refeicao = self.__controlador_sistema.controlador_refeicao.pega_refeicao_por_codigo(dados_venda['refeicao'])
+            print(refeicao)
+            bebida = self.__controlador_sistema.controlador_bebida.pega_bebida_por_codigo(dados_venda['bebida'])
+            print(bebida)
+            if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
+                venda = Venda(cliente, funcionario, refeicao, bebida)
+                venda.codigo = random.randint(1, 1000)
+                self.__controlador_sistema.controlador_funcionario.incrementa_vendas(funcionario)
+                self.__venda_DAO.add(venda)
+                self.__tela_venda.mostra_msg('Venda criada')
             else:
-                raise ListaVaziaException
+                raise DadosInvalidosException
         except DadosInvalidosException as e:
             self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
-        except ListaVaziaException as e:
-            self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+
 
     def lista_vendas(self):
         dados_venda = []
