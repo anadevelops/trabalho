@@ -33,8 +33,8 @@ class ControladorRefeicao():
         
         try:
             if dados_refeicao is not False:
-                ing1 = self.__suprimento_DAO.get(dados_refeicao['ingrediente1'])
-                ing2 = self.__suprimento_DAO.get(dados_refeicao['ingrediente2'])
+                ing1 = self.__suprimento_DAO.get(int(dados_refeicao['ingrediente1']))
+                ing2 = self.__suprimento_DAO.get(int(dados_refeicao['ingrediente2']))
                 if ing1 is not None and ing2 is not None:
                     if (isinstance(dados_refeicao["nome"], str)):
                         if (isinstance(self.verifica_booleano(dados_refeicao["veget"]), bool) and
@@ -56,8 +56,10 @@ class ControladorRefeicao():
                             raise DadosInvalidosException
                     else:
                         raise DadosInvalidosException
-                else:
-                        raise DadosInvalidosException
+            else:
+                raise ItemInexistenteException
+        except DadosInvalidosException as e:
+            self.__tela_refeicao.mostra_msg(f'Erro: {str(e)}')
         except ItemInexistenteException as e:
             self.__tela_refeicao.mostra_msg(f'Erro: {str(e)}')
 
@@ -70,8 +72,8 @@ class ControladorRefeicao():
                 if(refeicao is not None):
                     novos_dados_refeicao = self.__tela_refeicao.pega_dados_refeicao()
 
-                    ing1 = self.__suprimento_DAO.get(novos_dados_refeicao['ingrediente1'])
-                    ing2 = self.__suprimento_DAO.get(novos_dados_refeicao['ingrediente2'])
+                    ing1 = self.__suprimento_DAO.get(int(novos_dados_refeicao['ingrediente1']))
+                    ing2 = self.__suprimento_DAO.get(int(novos_dados_refeicao['ingrediente2']))
 
                     if ing1 is not None and ing2 is not None:
                         if (isinstance(novos_dados_refeicao["nome"], str)):
@@ -103,6 +105,8 @@ class ControladorRefeicao():
         except ItemInexistenteException as e:
             self.__tela_refeicao.mostra_msg(f'Erro: {str(e)}')
         except ListaVaziaException as e:
+            self.__tela_refeicao.mostra_msg(f'Erro: {str(e)}')
+        except DadosInvalidosException as e:
             self.__tela_refeicao.mostra_msg(f'Erro: {str(e)}')
 
     def lista_refeicao(self):

@@ -33,11 +33,11 @@ class ControladorBebida():
 
         try:
             if dados_bebida is not False:
-                ing1 = self.__suprimento_DAO.get(dados_bebida['ingrediente1'])
-                ing2 = self.__suprimento_DAO.get(dados_bebida['ingrediente2'])
+                ing1 = self.__suprimento_DAO.get(int(dados_bebida['ingrediente1']))
+                ing2 = self.__suprimento_DAO.get(int(dados_bebida['ingrediente2']))
                 if ing1 is not None and ing2 is not None:
                     if (isinstance(dados_bebida["nome"], str) and
-                        isinstance(dados_bebida["grau_alcoolico"], float)):
+                        isinstance(float(dados_bebida["grau_alcoolico"]), float)):
                         if (isinstance(self.verifica_booleano(dados_bebida["veget"]), bool) and
                             isinstance(self.verifica_booleano(dados_bebida["vegan"]), bool) and
                             isinstance(self.verifica_booleano(dados_bebida["gluten"]), bool) and
@@ -60,7 +60,11 @@ class ControladorBebida():
                         raise DadosInvalidosException
                 else:
                     raise DadosInvalidosException
+            else:
+                raise ItemInexistenteException
         except ItemInexistenteException as e:
+            self.__tela_bebida.mostra_msg(f'Erro: {str(e)}')
+        except DadosInvalidosException as e:
             self.__tela_bebida.mostra_msg(f'Erro: {str(e)}')
 
     def alterar_bebida(self):
@@ -73,15 +77,12 @@ class ControladorBebida():
                 if(bebida is not None):
                     novos_dados_bebida = self.__tela_bebida.pega_dados_bebida()
 
-                    #ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente1'])
-                    #ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente2'])
-
-                    ing1 = self.__suprimento_DAO.get(novos_dados_bebida['ingrediente1'])
-                    ing2 = self.__suprimento_DAO.get(novos_dados_bebida['ingrediente2'])
+                    ing1 = self.__suprimento_DAO.get(int(novos_dados_bebida['ingrediente1']))
+                    ing2 = self.__suprimento_DAO.get(int(novos_dados_bebida['ingrediente2']))
 
                     if ing1 is not None and ing2 is not None:
                         if (isinstance(novos_dados_bebida["nome"], str) and
-                        isinstance(novos_dados_bebida["grau_alcoolico"], float)):   
+                        isinstance(float(novos_dados_bebida["grau_alcoolico"]), float)):   
                             if (isinstance(self.verifica_booleano(novos_dados_bebida["veget"]), bool) and
                             isinstance(self.verifica_booleano(novos_dados_bebida["vegan"]), bool) and
                             isinstance(self.verifica_booleano(novos_dados_bebida["gluten"]), bool) and
@@ -109,6 +110,8 @@ class ControladorBebida():
         except ItemInexistenteException as e:
             self.__tela_bebida.mostra_msg(f'Erro: {str(e)}')
         except ListaVaziaException as e:
+            self.__tela_bebida.mostra_msg(f'Erro: {str(e)}')
+        except DadosInvalidosException as e:
             self.__tela_bebida.mostra_msg(f'Erro: {str(e)}')
 
     def lista_bebida(self):
