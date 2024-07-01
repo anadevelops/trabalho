@@ -28,15 +28,16 @@ class ControladorSuprimento():
         
     def incluir_suprimento(self):
         dados_suprimento = self.__tela_suprimento.pega_dados_suprimento()
-        novo_suprimento = Suprimento(dados_suprimento["nome"],
-                                     dados_suprimento["preco"])
-        novo_suprimento.codigo = random.randint(1, 1000)
         try:
-            if isinstance(novo_suprimento, Suprimento):
-                self.__suprimento_DAO.add(novo_suprimento)
-                self.__tela_suprimento.mostra_msg('Suprimento criado')
-            else:
-                raise DadosInvalidosException
+            if dados_suprimento is not False:
+                novo_suprimento = Suprimento(dados_suprimento["nome"],
+                                            dados_suprimento["preco"])
+                novo_suprimento.codigo = random.randint(1, 1000)
+                if isinstance(novo_suprimento, Suprimento):
+                    self.__suprimento_DAO.add(novo_suprimento)
+                    self.__tela_suprimento.mostra_msg('Suprimento criado')
+                else:
+                    raise DadosInvalidosException
         except DadosInvalidosException as e:
             self.__tela_suprimento.mostra_msg(f'Erro: {str(e)}')
     
@@ -62,7 +63,7 @@ class ControladorSuprimento():
                 if sup is not None:
                     novos_dados_sup = self.__tela_suprimento.pega_dados_suprimento()
                     sup.nome = novos_dados_sup['nome']
-                    sup.preco = novos_dados_sup['preco']
+                    sup.preco = float(novos_dados_sup['preco'])
                     self.__suprimento_DAO.update(sup)
                     self.listar_suprimentos()
                 else:

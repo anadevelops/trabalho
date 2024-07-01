@@ -29,85 +29,83 @@ class ControladorBebida():
             self.__tela_bebida.mostra_msg(f'Erro: {str(e)}')
 
     def incluir_bebida(self):
-        dados_bebida = self.__tela_bebida.pega_dados_bebida()
-
-        #ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(dados_bebida['ingrediente1'])
-        #ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(dados_bebida['ingrediente2'])
-
-        ing1 = self.__suprimento_DAO.get(dados_bebida['ingrediente1'])
-        ing2 = self.__suprimento_DAO.get(dados_bebida['ingrediente2'])
+        dados_bebida = self.__tela_bebida.pega_dados_bebida()  
 
         try:
-            if ing1 is not None and ing2 is not None:
-                if (isinstance(dados_bebida["nome"], str) and
-                    isinstance(dados_bebida["grau_alcoolico"], float)):
-                    if (isinstance(self.verifica_booleano(dados_bebida["veget"]), bool) and
-                        isinstance(self.verifica_booleano(dados_bebida["vegan"]), bool) and
-                        isinstance(self.verifica_booleano(dados_bebida["gluten"]), bool) and
-                        isinstance(self.verifica_booleano(dados_bebida["lactose"]), bool)):
+            if dados_bebida is not False:
+                ing1 = self.__suprimento_DAO.get(dados_bebida['ingrediente1'])
+                ing2 = self.__suprimento_DAO.get(dados_bebida['ingrediente2'])
+                if ing1 is not None and ing2 is not None:
+                    if (isinstance(dados_bebida["nome"], str) and
+                        isinstance(dados_bebida["grau_alcoolico"], float)):
+                        if (isinstance(self.verifica_booleano(dados_bebida["veget"]), bool) and
+                            isinstance(self.verifica_booleano(dados_bebida["vegan"]), bool) and
+                            isinstance(self.verifica_booleano(dados_bebida["gluten"]), bool) and
+                            isinstance(self.verifica_booleano(dados_bebida["lactose"]), bool)):
 
-                        nova_bebida = Bebida(dados_bebida["nome"],
-                                            dados_bebida["veget"], dados_bebida["vegan"],
-                                            dados_bebida["gluten"], dados_bebida["lactose"],
-                                            ing1, ing2,
-                                            dados_bebida["grau_alcoolico"])
-                        nova_bebida.codigo = random.randint(1, 1000)
-                        if isinstance(nova_bebida, Bebida):
-                            self.__bebida_DAO.add(nova_bebida)
-                            self.__tela_bebida.mostra_msg('Bebida criada')
+                            nova_bebida = Bebida(dados_bebida["nome"],
+                                                dados_bebida["veget"], dados_bebida["vegan"],
+                                                dados_bebida["gluten"], dados_bebida["lactose"],
+                                                ing1, ing2,
+                                                dados_bebida["grau_alcoolico"])
+                            nova_bebida.codigo = random.randint(1, 1000)
+                            if isinstance(nova_bebida, Bebida):
+                                self.__bebida_DAO.add(nova_bebida)
+                                self.__tela_bebida.mostra_msg('Bebida criada')
+                            else:
+                                raise DadosInvalidosException
                         else:
                             raise DadosInvalidosException
                     else:
                         raise DadosInvalidosException
                 else:
                     raise DadosInvalidosException
-            else:
-                raise DadosInvalidosException
         except ItemInexistenteException as e:
             self.__tela_bebida.mostra_msg(f'Erro: {str(e)}')
 
     def alterar_bebida(self):
-        self.lista_bebida()
-        codigo_bebida = self.__tela_bebida.seleciona_bebida()
-        bebida = self.pega_bebida_por_codigo(codigo_bebida)
-
         try:
-            if(bebida is not None):
-                novos_dados_bebida = self.__tela_bebida.pega_dados_bebida()
+            if self.lista_bebida():
+                codigo_bebida = self.__tela_bebida.seleciona_bebida()
+                bebida = self.pega_bebida_por_codigo(codigo_bebida)
 
-                #ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente1'])
-                #ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente2'])
+            
+                if(bebida is not None):
+                    novos_dados_bebida = self.__tela_bebida.pega_dados_bebida()
 
-                ing1 = self.__suprimento_DAO.get(novos_dados_bebida['ingrediente1'])
-                ing2 = self.__suprimento_DAO.get(novos_dados_bebida['ingrediente2'])
+                    #ing1 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente1'])
+                    #ing2 = self.__controlador_sistema.controlador_suprimento.pega_suprimento_por_codigo(novos_dados_bebida['ingrediente2'])
 
-                if ing1 is not None and ing2 is not None:
-                    if (isinstance(novos_dados_bebida["nome"], str) and
-                    isinstance(novos_dados_bebida["grau_alcoolico"], float)):   
-                        if (isinstance(self.verifica_booleano(novos_dados_bebida["veget"]), bool) and
-                        isinstance(self.verifica_booleano(novos_dados_bebida["vegan"]), bool) and
-                        isinstance(self.verifica_booleano(novos_dados_bebida["gluten"]), bool) and
-                        isinstance(self.verifica_booleano(novos_dados_bebida["lactose"]), bool)):
-                            
-                            bebida.nome = novos_dados_bebida["nome"]
-                            bebida.veget = novos_dados_bebida["veget"]
-                            bebida.vegan = novos_dados_bebida["vegan"]
-                            bebida.gluten = novos_dados_bebida["gluten"]
-                            bebida.lactose = novos_dados_bebida["lactose"]
-                            bebida.grau_alcoolico = novos_dados_bebida["grau_alcoolico"]
+                    ing1 = self.__suprimento_DAO.get(novos_dados_bebida['ingrediente1'])
+                    ing2 = self.__suprimento_DAO.get(novos_dados_bebida['ingrediente2'])
 
-                            bebida.altera_primeiro_ing(ing1)
-                            bebida.altera_segundo_ing(ing2)
-                            self.__bebida_DAO.update(bebida)
-                            self.lista_bebida()
+                    if ing1 is not None and ing2 is not None:
+                        if (isinstance(novos_dados_bebida["nome"], str) and
+                        isinstance(novos_dados_bebida["grau_alcoolico"], float)):   
+                            if (isinstance(self.verifica_booleano(novos_dados_bebida["veget"]), bool) and
+                            isinstance(self.verifica_booleano(novos_dados_bebida["vegan"]), bool) and
+                            isinstance(self.verifica_booleano(novos_dados_bebida["gluten"]), bool) and
+                            isinstance(self.verifica_booleano(novos_dados_bebida["lactose"]), bool)):
+                                
+                                bebida.nome = novos_dados_bebida["nome"]
+                                bebida.veget = novos_dados_bebida["veget"]
+                                bebida.vegan = novos_dados_bebida["vegan"]
+                                bebida.gluten = novos_dados_bebida["gluten"]
+                                bebida.lactose = novos_dados_bebida["lactose"]
+                                bebida.grau_alcoolico = novos_dados_bebida["grau_alcoolico"]
+
+                                bebida.altera_primeiro_ing(ing1)
+                                bebida.altera_segundo_ing(ing2)
+                                self.__bebida_DAO.update(bebida)
+                                self.lista_bebida()
+                            else:
+                                raise DadosInvalidosException
                         else:
-                            raise DadosInvalidosException
+                            raise DadosInvalidosException  
                     else:
-                        raise DadosInvalidosException  
+                        raise DadosInvalidosException     
                 else:
-                    raise DadosInvalidosException     
-            else:
-                raise ItemInexistenteException
+                    raise ItemInexistenteException
         except ItemInexistenteException as e:
             self.__tela_bebida.mostra_msg(f'Erro: {str(e)}')
         except ListaVaziaException as e:
