@@ -21,23 +21,6 @@ class TelaFuncionario:
             opcao = 0
         self.close()
         return opcao
-        '''
-        print('---------- FUNCIONARIO ----------')
-        print('Escolha a opção:')
-        print('1 - Criar funcionário')
-        print('2 - Atualizar funcionário')
-        print('3 - Listar funcionários')
-        print('4 - Excluir funcionário')
-        print('0 - Retornar')
-        
-        try:
-            opcao = int(input('Escolha a opção: '))
-        except ValueError:
-            self.mostra_msg('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
-        #except Exception as opcao not in range(0,6):
-            #self.mostra_msg('Opção inexistente')
-        else:
-            return opcao'''
 
     def init_opcoes(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -51,7 +34,7 @@ class TelaFuncionario:
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
     def pega_dados_funcionario(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -66,7 +49,7 @@ class TelaFuncionario:
             [sg.Text('Cidade:', size=(15, 1)), sg.InputText('', key='cidade')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         nome = values['nome']
@@ -98,7 +81,7 @@ class TelaFuncionario:
             [sg.Text('Cidade:', size=(15, 1)), sg.InputText('', key='cidade')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         nome = values['nome']
@@ -110,17 +93,18 @@ class TelaFuncionario:
 
         self.close()
         return {'nome': nome,
-                        'salario': salario,
-                        'funcao': funcao,
-                        'rua': rua,
-                        'bairro': bairro,
-                        'cidade': cidade}
+                'funcao': funcao,
+                'salario': salario,
+                'rua': rua,
+                'bairro': bairro,
+                'cidade': cidade}
 
     def mostra_funcionario(self, dados_funcionario):
         string_todos_funcionarios = ''
         for dado in dados_funcionario:
             string_todos_funcionarios = string_todos_funcionarios + 'NOME DO FUNCIONÁRIO: ' + str(dado['nome']) + '\n'
             string_todos_funcionarios = string_todos_funcionarios + 'CPF DO FUNCIONÁRIO: ' + str(dado['cpf']) + '\n'
+            string_todos_funcionarios = string_todos_funcionarios + 'CÓDIGO DO FUNCIONÁRIO: ' + str(dado['codigo']) + '\n'
             string_todos_funcionarios = string_todos_funcionarios + 'SALÁRIO DO FUNCIONÁRIO: ' + str(dado['salario']) + '\n'
             string_todos_funcionarios = string_todos_funcionarios + 'FUNÇÃO DO FUNCIONÁRIO: ' + str(dado['funcao']) + '\n'
             string_todos_funcionarios = string_todos_funcionarios + 'ENDEREÇO DO FUNCIONÁRIO: ' + str(dado['endereco']) + '\n'
@@ -133,16 +117,16 @@ class TelaFuncionario:
         sg.ChangeLookAndFeel('DarkAmber')
         layout = [
             [sg.Text('-------- SELECIONAR FUNCIONÁRIO ----------', font=("Helvica", 25))],
-            [sg.Text('Digite o CPF do funcionário que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Digite o código do funcionário que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona funcionário').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
-        cpf = values['cpf']
+        codigo = values['codigo']
         self.close()
-        return cpf
+        return codigo
     
     def mostra_msg(self, msg):
         sg.popup("", msg)

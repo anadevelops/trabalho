@@ -6,12 +6,12 @@ class FuncionarioDAO(DAO):
         super().__init__('funcionario.pkl')
 
     def add(self, funcionario: Funcionario):
-        if (funcionario is not None) and (isinstance(funcionario, Funcionario)) and (isinstance(funcionario.cpf, int)):
-            super().add(funcionario.cpf, funcionario)
+        if (funcionario is not None) and (isinstance(funcionario, Funcionario) and (isinstance(funcionario.codigo, int))):
+            super().add(funcionario.codigo, funcionario)
 
     def update(self, funcionario: Funcionario):
-        if (funcionario is not None) and (isinstance(funcionario, Funcionario)) and (isinstance(funcionario.cpf, int)):
-            super().update(funcionario.cpf, funcionario)
+        if (funcionario is not None) and (isinstance(funcionario, Funcionario) and (isinstance(funcionario.codigo, int))):
+            super().update(funcionario.codigo, funcionario)
 
     def get(self, key: int):
         if isinstance(key, int):

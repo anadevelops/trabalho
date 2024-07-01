@@ -13,6 +13,7 @@ class Funcionario(Pessoa):
         self.__funcao = funcao
         self.__endereco = Endereco(rua, bairro, cidade)
         self.__num_vendas = 0
+        self.__codigo = 0
 
     @property
     def salario(self):
@@ -29,6 +30,10 @@ class Funcionario(Pessoa):
     @property
     def num_vendas(self):
         return self.__num_vendas
+    
+    @property
+    def codigo(self):
+        return self.__codigo
 
     @salario.setter
     def salario(self, salario):
@@ -43,6 +48,10 @@ class Funcionario(Pessoa):
     @num_vendas.setter
     def num_vendas(self, vendas):
         self.__num_vendas = vendas
+
+    @codigo.setter
+    def codigo(self, codigo):
+        self.__codigo = codigo
 
     @endereco.setter
     def endereco(self, rua, bairro, cidade):
