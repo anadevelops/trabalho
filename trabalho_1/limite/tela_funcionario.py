@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from trabalho_1.excecoes.dados_invalidos_exception import DadosInvalidosException
 
 
 class TelaFuncionario:
@@ -61,13 +62,25 @@ class TelaFuncionario:
         cidade = values['cidade']
 
         self.close()
-        return {'nome': nome,
+        try:
+            if ((nome != '') and
+                (cpf != '') and
+                (salario != '') and
+                (funcao != '') and
+                (rua != '') and
+                (bairro != '') and
+                (cidade != '')):
+                return {'nome': nome,
                         'cpf': cpf,
                         'salario': salario,
                         'funcao': funcao,
                         'rua': rua,
                         'bairro': bairro,
                         'cidade': cidade}
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def pega_dados_funcionario_att(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -92,12 +105,23 @@ class TelaFuncionario:
         cidade = values['cidade']
 
         self.close()
-        return {'nome': nome,
-                        'funcao': funcao,
+        try:
+            if ((nome != '') and
+                (salario != '') and
+                (funcao != '') and
+                (rua != '') and
+                (bairro != '') and
+                (cidade != '')):
+                return {'nome': nome,
                         'salario': salario,
+                        'funcao': funcao,
                         'rua': rua,
                         'bairro': bairro,
                         'cidade': cidade}
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def mostra_funcionario(self, dados_funcionario):
         string_todos_funcionarios = ''
@@ -110,7 +134,7 @@ class TelaFuncionario:
             string_todos_funcionarios = string_todos_funcionarios + 'ENDEREÇO DO FUNCIONÁRIO: ' + str(dado['endereco']) + '\n'
             string_todos_funcionarios = string_todos_funcionarios + 'VENDAS DO FUNCIONÁRIO: ' + str(dado['num_vendas']) + '\n\n'
 
-        sg.Popup(' LISTA DE FUNCIONÁRIOS ', string_todos_funcionarios)
+        sg.Popup('-------- LISTA DE FUNCIONÁRIOS ----------', string_todos_funcionarios)
 
 
     def seleciona_funcionario(self):
@@ -126,7 +150,13 @@ class TelaFuncionario:
         button, values = self.open()
         codigo = values['codigo']
         self.close()
-        return codigo
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
     
     def mostra_msg(self, msg):
         sg.popup("", msg)

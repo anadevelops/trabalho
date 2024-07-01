@@ -1,6 +1,4 @@
 import PySimpleGUI as sg
-from trabalho_1.excecoes.lista_vazia_exception import ListaVaziaException
-from trabalho_1.excecoes.item_inexistente_exception import ItemInexistenteException
 from trabalho_1.excecoes.dados_invalidos_exception import DadosInvalidosException
 
 

@@ -31,27 +31,29 @@ class ControladorFuncionario:
 
     def add_funcionario(self):
         dados_funcionario = self.__tela_funcionario.pega_dados_funcionario()
-        new_func = Funcionario(dados_funcionario['nome'],
-                                dados_funcionario['cpf'],
-                                dados_funcionario['salario'],
-                                dados_funcionario['funcao'],
-                                dados_funcionario['rua'],
-                                dados_funcionario['bairro'],
-                                dados_funcionario['cidade'])
-        new_func.num_vendas = 0
-        new_func.codigo = random.randint(1, 1000)
         try:
-            if self.__controlador_sistema.isCpfValid(new_func.cpf):
-                for func in self.__funcionario_DAO.get_all():
-                    if func.cpf == new_func.cpf:
-                        raise ConflitoFuncionarioException
-                if isinstance(new_func, Funcionario):
-                    self.__funcionario_DAO.add(new_func)
-                    self.__tela_funcionario.mostra_msg('Funcionário criado')
+            if dados_funcionario is not False:
+                new_func = Funcionario(dados_funcionario['nome'],
+                                        dados_funcionario['cpf'],
+                                        dados_funcionario['salario'],
+                                        dados_funcionario['funcao'],
+                                        dados_funcionario['rua'],
+                                        dados_funcionario['bairro'],
+                                        dados_funcionario['cidade'])
+                new_func.num_vendas = 0
+                new_func.codigo = random.randint(1, 1000)
+        
+                if self.__controlador_sistema.isCpfValid(new_func.cpf):
+                    for func in self.__funcionario_DAO.get_all():
+                        if func.cpf == new_func.cpf:
+                            raise ConflitoFuncionarioException
+                    if isinstance(new_func, Funcionario):
+                        self.__funcionario_DAO.add(new_func)
+                        self.__tela_funcionario.mostra_msg('Funcionário criado')
+                    else:
+                        raise DadosInvalidosException
                 else:
-                    raise DadosInvalidosException
-            else:
-                raise CPFInvalidoException
+                    raise CPFInvalidoException
         except DadosInvalidosException as e:
             self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
         except CPFInvalidoException as e:
@@ -83,21 +85,22 @@ class ControladorFuncionario:
         try:
             if self.lista_funcionarios():
                 cod_func = self.__tela_funcionario.seleciona_funcionario()
-                func = self.pega_funcionario_p_cod(cod_func)
+                if cod_func is not False:
+                    func = self.pega_funcionario_p_cod(cod_func)
 
-                if func is not None:
-                    novos_dados_func = self.__tela_funcionario.pega_dados_funcionario_att()
-                    func.nome = novos_dados_func['nome']
-                    func.funcao = novos_dados_func['funcao']
-                    func.salario = float(novos_dados_func['salario'])
-                    func.endereco.rua = novos_dados_func['rua']
-                    func.endereco.bairro = novos_dados_func['bairro']
-                    func.endereco.cidade = novos_dados_func['cidade']
-                    self.__funcionario_DAO.update(func)
-                    self.__tela_funcionario.mostra_msg('Funcionário alterado.')
-                    self.lista_funcionarios()
-                else:
-                    raise ItemInexistenteException
+                    if func is not None:
+                        novos_dados_func = self.__tela_funcionario.pega_dados_funcionario_att()
+                        func.nome = novos_dados_func['nome']
+                        func.funcao = novos_dados_func['funcao']
+                        func.salario = float(novos_dados_func['salario'])
+                        func.endereco.rua = novos_dados_func['rua']
+                        func.endereco.bairro = novos_dados_func['bairro']
+                        func.endereco.cidade = novos_dados_func['cidade']
+                        self.__funcionario_DAO.update(func)
+                        self.__tela_funcionario.mostra_msg('Funcionário alterado.')
+                        self.lista_funcionarios()
+                    else:
+                        raise ItemInexistenteException
             else:
                 raise ListaVaziaException
         except ItemInexistenteException as e:
@@ -111,13 +114,14 @@ class ControladorFuncionario:
         try:
             if self.lista_funcionarios():
                 cod_func = self.__tela_funcionario.seleciona_funcionario()
-                func = self.pega_funcionario_p_cod(cod_func)
+                if cod_func is not False:
+                    func = self.pega_funcionario_p_cod(cod_func)
 
-                if func is not None:
-                    self.__funcionario_DAO.remove(func.codigo)
-                    self.lista_funcionarios()
-                else:
-                    raise ItemInexistenteException
+                    if func is not None:
+                        self.__funcionario_DAO.remove(func.codigo)
+                        self.lista_funcionarios()
+                    else:
+                        raise ItemInexistenteException
             else:
                 raise ListaVaziaException
         except ItemInexistenteException as e:

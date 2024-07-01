@@ -28,15 +28,16 @@ class ControladorCliente:
 
     def add_cliente(self):
         dados_cliente = self.__tela_cliente.pega_dados_cliente()
-        new_cli = Cliente(dados_cliente['nome'],
-                                dados_cliente['cpf'])
-        new_cli.codigo = random.randint(1, 1000)
         try:
-            if isinstance(new_cli, Cliente):
-                self.__cliente_DAO.add(new_cli)
-                self.__tela_cliente.mostra_msg('Cliente criado')
-            else:
-                raise DadosInvalidosException
+            if dados_cliente is not False:
+                new_cli = Cliente(dados_cliente['nome'],
+                                        dados_cliente['cpf'])
+                new_cli.codigo = random.randint(1, 1000)
+                if isinstance(new_cli, Cliente):
+                    self.__cliente_DAO.add(new_cli)
+                    self.__tela_cliente.mostra_msg('Cliente criado')
+                else:
+                    raise DadosInvalidosException
         except DadosInvalidosException as e:
             self.__tela_cliente.mostra_msg(f'Erro: {str(e)}')
 
@@ -57,16 +58,17 @@ class ControladorCliente:
         try:
             if self.lista_clientes():
                 cod_cli = self.__tela_cliente.seleciona_cliente()
-                cli = self.pega_cliente_p_cod(cod_cli)
+                if cod_cli is not False:
+                    cli = self.pega_cliente_p_cod(cod_cli)
 
-                if cli is not None:
-                    novos_dados_cli = self.__tela_cliente.pega_dados_cliente()
-                    cli.nome = novos_dados_cli['nome']
-                    cli.cpf = novos_dados_cli['cpf']
-                    self.__cliente_DAO.update(cli)
-                    self.lista_clientes()
-                else:
-                    raise ItemInexistenteException
+                    if cli is not None:
+                        novos_dados_cli = self.__tela_cliente.pega_dados_cliente()
+                        cli.nome = novos_dados_cli['nome']
+                        cli.cpf = novos_dados_cli['cpf']
+                        self.__cliente_DAO.update(cli)
+                        self.lista_clientes()
+                    else:
+                        raise ItemInexistenteException
             else:
                 raise ListaVaziaException
         except ItemInexistenteException as e:
@@ -78,13 +80,14 @@ class ControladorCliente:
         try:
             if self.lista_clientes():
                 cod_cli = self.__tela_cliente.seleciona_cliente()
-                cli = self.pega_cliente_p_cod(int(cod_cli))
+                if cod_cli is not False:
+                    cli = self.pega_cliente_p_cod(int(cod_cli))
 
-                if cli is not None:
-                    self.__cliente_DAO.remove(cli.codigo)
-                    self.lista_clientes()
-                else:
-                    raise ItemInexistenteException
+                    if cli is not None:
+                        self.__cliente_DAO.remove(cli.codigo)
+                        self.lista_clientes()
+                    else:
+                        raise ItemInexistenteException
             else:
                 raise ListaVaziaException
         except ItemInexistenteException as e:

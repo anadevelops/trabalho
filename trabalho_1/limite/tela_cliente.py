@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from trabalho_1.excecoes.dados_invalidos_exception import DadosInvalidosException
 
 class TelaCliente:
     def __init__(self):
@@ -48,10 +49,16 @@ class TelaCliente:
 
         button, values = self.open()
         nome = values['nome']
-        cpf = int(values['cpf'])
+        cpf = values['cpf']
 
         self.close()
-        return {"nome": nome, "cpf": cpf}
+        try:
+            if ((nome != '') and (cpf != '')):
+                return {"nome": nome, "cpf": cpf}
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def mostra_cliente(self, dados_cliente):
         string_todos_clientes = ""
@@ -67,15 +74,21 @@ class TelaCliente:
         layout = [
             [sg.Text('-------- SELECIONAR CLIENTE ----------', font=("Helvica", 25))],
             [sg.Text('Digite o código do cliente que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
         self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
-        cpf = values['cpf']
+        codigo = values['codigo']
         self.close()
-        return cpf
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def mostra_msg(self, msg):
         sg.popup("", msg)
