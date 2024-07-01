@@ -20,7 +20,7 @@ class ControladorFuncionario:
     def pega_funcionario_p_cpf(self, cpf: int):
         try:
             for funcionario in self.__funcionario_DAO.get_all():
-                if funcionario.cpf == cpf:
+                if funcionario.cpf == int(cpf):
                     return funcionario
             raise ItemInexistenteException
         except ItemInexistenteException as e:
@@ -57,15 +57,15 @@ class ControladorFuncionario:
         try:
             if len(dados_funcionario) > 0:
                 self.__tela_funcionario.mostra_funcionario(dados_funcionario)
-            else:
-                raise ListaVaziaException
+                return True
+            raise ListaVaziaException
         except ListaVaziaException as e:
             self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
-            return None
+            return False
 
     def altera_funcionario(self):
         try:
-            if self.lista_funcionarios() is not None:
+            if self.lista_funcionarios():
                 cpf_func = self.__tela_funcionario.seleciona_funcionario()
                 func = self.pega_funcionario_p_cpf(cpf_func)
 
@@ -89,7 +89,7 @@ class ControladorFuncionario:
 
     def del_funcionario(self):
         try:
-            if self.lista_funcionarios() is not None:
+            if self.lista_funcionarios():
                 cpf_func = self.__tela_funcionario.seleciona_funcionario()
                 func = self.pega_funcionario_p_cpf(cpf_func)
 
@@ -106,10 +106,11 @@ class ControladorFuncionario:
             self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
 
     def incrementa_vendas(self, funcionario):
-        func = self.pega_funcionario_p_cpf(funcionario)
+        func = self.pega_funcionario_p_cpf(funcionario.cpf)
 
         if func is not None:
             func.num_vendas += 1
+            self.__funcionario_DAO.update(func)
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()

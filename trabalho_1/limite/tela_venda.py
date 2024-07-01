@@ -27,29 +27,14 @@ class TelaVenda:
             opcao = 8
         if values['9']:
             opcao = 9
+        if values['10']:
+            opcao = 10
+        if values['11']:
+            opcao = 11
         if values['0'] or button in (None, 'Cancelar'):
             opcao = 0
         self.close()
         return opcao
-        '''
-        print('---------- VENDA ----------')
-        print('1 - Fazer venda')
-        print('2 - Atualizar venda')
-        print('3 - Listar todas as vendas')
-        print('4 - Excluir venda')
-        print('5 - Vendas por funcionário')
-        print('6 - Vendas por cliente')
-        print('7 - Vendas em aberto')
-        print('8 - Vendas encerradas')
-        print('9 - Encerrar venda')
-        print('0 - Retornar') 
-
-        try:
-            opcao = int(input('Escolha a opção: '))
-        except ValueError:
-            self.mostra_msg('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
-        else:
-            return opcao'''
 
     def init_opcoes(self):
         # sg.theme_previewer()
@@ -59,6 +44,8 @@ class TelaVenda:
             [sg.Text('Escolha sua opção', font=("Helvica", 15))],
             [sg.Radio('Incluir Venda', "RD1", key='1')],
             [sg.Radio('Alterar Venda', "RD1", key='2')],
+            [sg.Radio('Adicionar Bebida', 'RD1', key='10')],
+            [sg.Radio('Adicionar Refeição', 'RD1', key='11')],
             [sg.Radio('Listar todas as vendas', "RD1", key='3')],
             [sg.Radio('Excluir Venda', "RD1", key='4')],
             [sg.Radio('Vendas por funcionário', 'RD1', key='5')],
@@ -99,8 +86,12 @@ class TelaVenda:
             string_todas_vendas = string_todas_vendas + 'CÓDIGO DA VENDA: ' + str(dado['codigo']) + '\n'
             string_todas_vendas = string_todas_vendas + 'CLIENTE DA VENDA: ' + dado['cliente'] + '\n'
             string_todas_vendas = string_todas_vendas + 'FUNCIONÁRIO DA VENDA: ' + dado['funcionario'] + '\n'
-            string_todas_vendas = string_todas_vendas + 'REFEIÇÕES DA VENDA: ' + dado['refeicoes'] + '\n'
-            string_todas_vendas = string_todas_vendas + 'BEBIDAS DA VENDA: ' + dado['bebidas'] + '\n\n'
+
+            refeicoes_str = ', '.join(dado['refeicoes'])
+            bebidas_str = ', '.join(dado['bebidas'])
+
+            string_todas_vendas = string_todas_vendas + 'REFEIÇÕES DA VENDA: ' + refeicoes_str + '\n'
+            string_todas_vendas = string_todas_vendas + 'BEBIDAS DA VENDA: ' + bebidas_str + '\n\n'
 
         sg.Popup('---------- VENDA REGISTRADA ----------', string_todas_vendas)
 
@@ -140,13 +131,13 @@ class TelaVenda:
         layout = [
             [sg.Text('-------- SELECIONAR CLIENTE ----------', font=("Helvica", 25))],
             [sg.Text('Digite o código do cliente que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
         self.__window = sg.Window('Seleciona cliente').Layout(layout)
 
         button, values = self.open()
-        codigo = int(values['codigo'])
+        codigo = values['codigo']
         self.close()
         return codigo
 
@@ -155,7 +146,7 @@ class TelaVenda:
         layout = [
             [sg.Text('-------- SELECIONAR REFEIÇÃO ----------', font=("Helvica", 25))],
             [sg.Text('Digite o código da refeição que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
         self.__window = sg.Window('Seleciona refeição').Layout(layout)
@@ -170,7 +161,7 @@ class TelaVenda:
         layout = [
             [sg.Text('-------- SELECIONAR BEBIDA ----------', font=("Helvica", 25))],
             [sg.Text('Digite o código da bebida que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
         self.__window = sg.Window('Seleciona bebida').Layout(layout)
@@ -185,7 +176,7 @@ class TelaVenda:
         layout = [
             [sg.Text('-------- ENCERRAR VENDA ----------', font=("Helvica", 25))],
             [sg.Text('Digite o código da venda que deseja encerrar:', font=("Helvica", 15))],
-            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
         self.__window = sg.Window('Encerra venda').Layout(layout)

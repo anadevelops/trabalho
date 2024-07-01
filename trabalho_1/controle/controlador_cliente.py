@@ -48,8 +48,7 @@ class ControladorCliente:
             if len(dados_cliente) > 0:
                 self.__tela_cliente.mostra_cliente(dados_cliente)
                 return True
-            else:
-                raise ListaVaziaException
+            raise ListaVaziaException
         except ListaVaziaException as e:
             self.__tela_cliente.mostra_msg(f'Erro: {str(e)}')
             return False
@@ -77,7 +76,7 @@ class ControladorCliente:
 
     def del_cliente(self):
         try:
-            if self.lista_clientes() is not None:
+            if self.lista_clientes():
                 cod_cli = self.__tela_cliente.seleciona_cliente()
                 cli = self.pega_cliente_p_cod(int(cod_cli))
 

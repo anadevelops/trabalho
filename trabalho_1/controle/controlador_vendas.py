@@ -20,7 +20,7 @@ class ControladorVendas:
     def pega_venda_p_codigo(self, codigo):
         try:
             for venda in self.__venda_DAO.get_all():
-                if venda.codigo == codigo:
+                if venda.codigo == int(codigo):
                     return venda
             raise ItemInexistenteException
         except ItemInexistenteException as e:
@@ -35,17 +35,15 @@ class ControladorVendas:
             dados_venda = self.__tela_venda.pega_dados_venda()
 
             cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(dados_venda['cliente'])
-            print(cliente)
             funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(dados_venda['funcionario'])
             print(funcionario)
             refeicao = self.__controlador_sistema.controlador_refeicao.pega_refeicao_por_codigo(dados_venda['refeicao'])
-            print(refeicao)
             bebida = self.__controlador_sistema.controlador_bebida.pega_bebida_por_codigo(dados_venda['bebida'])
-            print(bebida)
             if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
                 venda = Venda(cliente, funcionario, refeicao, bebida)
                 venda.codigo = random.randint(1, 1000)
                 self.__controlador_sistema.controlador_funcionario.incrementa_vendas(funcionario)
+                print(funcionario.num_vendas)
                 self.__venda_DAO.add(venda)
                 self.__tela_venda.mostra_msg('Venda criada')
             else:
@@ -58,23 +56,24 @@ class ControladorVendas:
         dados_venda = []
         for venda in self.__venda_DAO.get_all():
             dados_venda.append({'codigo': venda.codigo,
-                                                'cliente': venda.cliente.nome,
-                                                'funcionario': venda.funcionario.nome,
-                                                'refeicoes': venda.refeicoes,
-                                                'bebidas': venda.bebidas})
+                                'cliente': venda.cliente.nome,
+                                'funcionario': venda.funcionario.nome,
+                                'refeicoes': venda.refeicoes,
+                                'bebidas': venda.bebidas})
         try:
             if len(dados_venda) > 0:
                 self.__tela_venda.mostra_venda(dados_venda)
-            else:
-                raise ListaVaziaException
+                return True
+            raise ListaVaziaException
         except ListaVaziaException as e:
             self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def altera_venda(self):
         try:
-            if self.lista_vendas() is not None:
+            if self.lista_vendas():
                 cod_venda = self.__tela_venda.seleciona_venda()
-                venda = self.pega_venda_p_codigo(cod_venda)
+                venda = self.pega_venda_p_codigo(int(cod_venda))
 
                 if venda is not None:
                     novos_dados_venda = self.__tela_venda.pega_dados_venda()
@@ -96,9 +95,9 @@ class ControladorVendas:
 
     def excluir_venda(self):
         try:
-            if self.lista_vendas() is not None:
+            if self.lista_vendas():
                 cod_venda = self.__tela_venda.seleciona_venda()
-                venda = self.pega_venda_p_codigo(cod_venda)
+                venda = self.pega_venda_p_codigo(int(cod_venda))
 
                 if venda is not None:
                     self.__venda_DAO.remove(venda.codigo)
@@ -115,17 +114,22 @@ class ControladorVendas:
 
     def vendas_p_cliente(self):
         try:
-            if self.__controlador_sistema.controlador_cliente.lista_clientes() is not None:
+            if self.__controlador_sistema.controlador_cliente.lista_clientes():
                 cod_cli = self.__tela_venda.seleciona_cliente()
-                cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(cod_cli)
+                cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(int(cod_cli))
                 if cliente is not None:
+                    vendas_cli = []
                     for venda in self.__venda_DAO.get_all():
-                        if venda.cliente == cliente:
-                            self.__tela_venda.mostra_venda({'codigo': venda.codigo,
+                        if venda.cliente.codigo == cliente.codigo:
+                            vendas_cli.append({'codigo': venda.codigo,
                                                             'cliente': venda.cliente.nome,
                                                             'funcionario': venda.funcionario.nome,
                                                             'refeicoes': venda.refeicoes,
                                                             'bebidas': venda.bebidas})
+                    if len(vendas_cli) > 0:
+                        self.__tela_venda.mostra_venda(vendas_cli)
+                    else:
+                        raise ListaVaziaException
                 else:
                     raise ItemInexistenteException
             else:
@@ -137,17 +141,22 @@ class ControladorVendas:
 
     def vendas_p_funcionario(self):
         try:
-            if self.__controlador_sistema.controlador_funcionario.lista_funcionarios() is not None:
+            if self.__controlador_sistema.controlador_funcionario.lista_funcionarios():
                 cpf_func = self.__tela_venda.seleciona_funcionario()
                 funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(cpf_func)
                 if funcionario is not None:
+                    vendas_func = []
                     for venda in self.__venda_DAO.get_all():
-                        if venda.funcionario == funcionario:
-                            self.__tela_venda.mostra_venda({'codigo': venda.codigo,
+                        if venda.funcionario.cpf == funcionario.cpf:
+                            vendas_func.append({'codigo': venda.codigo,
                                                             'cliente': venda.cliente.nome,
                                                             'funcionario': venda.funcionario.nome,
                                                             'refeicoes': venda.refeicoes,
                                                             'bebidas': venda.bebidas})
+                    if len(vendas_func) > 0:
+                        self.__tela_venda.mostra_venda(vendas_func)
+                    else:
+                        raise ListaVaziaException
                 else:
                     raise ItemInexistenteException
             else:
@@ -158,44 +167,53 @@ class ControladorVendas:
             self.__tela_venda.mostra_msg(f'Erro {str(e)}')
 
     def vendas_abertas(self):
-        vendas_abertas = [venda for venda in self.__venda_DAO.get_all() if venda.aberta is True]
         try:
-            if len(vendas_abertas) > 0:
-                for venda in vendas_abertas:
-                    self.__tela_venda.mostra_venda({'codigo': venda.codigo,
+            vendas_abertas = []
+            for venda in self.__venda_DAO.get_all():
+                if venda.aberta is True:
+                    vendas_abertas.append({'codigo': venda.codigo,
                                                     'cliente': venda.cliente.nome,
                                                     'funcionario': venda.funcionario.nome,
                                                     'refeicoes': venda.refeicoes,
                                                     'bebidas': venda.bebidas})
+            if len(vendas_abertas) > 0:
+                self.__tela_venda.mostra_venda(vendas_abertas)
+                return True
             else:
                 raise ListaVaziaException
         except ListaVaziaException as e:
             self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def vendas_encerradas(self):
-        vendas_encerradas = [venda for venda in self.__venda_DAO.get_all() if venda.aberta is False]
         try:
+            vendas_encerradas = []
+            for venda in self.__venda_DAO.get_all():
+                if venda.aberta is False:
+                    vendas_encerradas.append({'codigo': venda.codigo,
+                                                'cliente': venda.cliente.nome,
+                                                'funcionario': venda.funcionario.nome,
+                                                'refeicoes': venda.refeicoes,
+                                                'bebidas': venda.bebidas})
             if len(vendas_encerradas) > 0:
-                for venda in vendas_encerradas:
-                    self.__tela_venda.mostra_venda({'codigo': venda.codigo,
-                                                    'cliente': venda.cliente.nome,
-                                                    'funcionario': venda.funcionario.nome,
-                                                    'refeicoes': venda.refeicoes,
-                                                    'bebidas': venda.bebidas})
+                self.__tela_mostra_venda(vendas_encerradas)
+                return True
             else:
                 raise ListaVaziaException
         except ListaVaziaException as e:
             self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def encerrar_venda(self):
         try:
-            if self.vendas_abertas() != None:
+            if self.vendas_abertas():
                 cod_venda = self.__tela_venda.seleciona_venda()
-                venda = self.pega_venda_p_codigo(cod_venda)
+                venda = self.pega_venda_p_codigo(int(cod_venda))
                 if venda is not None:
                     for vend in self.__venda_DAO.get_all():
                         if vend.codigo == venda.codigo:
                             vend.aberta = False
+                            self.__venda_DAO.update(vend)
                             self.__tela_venda.mostra_msg('Venda encerrada')
                 else:
                     raise ItemInexistenteException
@@ -203,6 +221,67 @@ class ControladorVendas:
                 return None
         except ItemInexistenteException as e:
             self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+    
+    def adicionar_bebida(self):
+        try:
+            if self.vendas_abertas():
+                self.__controlador_sistema.controlador_bebida.lista_bebida()
+                cod_venda = self.__tela_venda.seleciona_venda()
+                venda = self.pega_venda_p_codigo(int(cod_venda))
+                if venda is not None:
+                    cod_bebida = self.__tela_venda.seleciona_bebida()
+                    bebida = self.__controlador_sistema.controlador_bebida.pega_bebida_por_codigo(int(cod_bebida))
+                    if bebida is not None:
+                        dados_venda = []
+                        venda.bebidas = bebida
+                        self.__venda_DAO.update(venda)
+                        dados_venda.append({'codigo': venda.codigo,
+                                                'cliente': venda.cliente.nome,
+                                                'funcionario': venda.funcionario.nome,
+                                                'refeicoes': venda.refeicoes,
+                                                'bebidas': venda.bebidas})
+                        self.__tela_venda.mostra_venda(dados_venda)
+                    else:
+                        raise ItemInexistenteException
+                else:
+                    raise ItemInexistenteException
+            else:
+                raise ListaVaziaException
+        except ItemInexistenteException as e:
+            self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+        except ListaVaziaException as e:
+            self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+        
+    def adicionar_refeicao(self):
+        try:
+            if self.vendas_abertas():
+                self.__controlador_sistema.controlador_refeicao.lista_refeicao()
+                cod_venda = self.__tela_venda.seleciona_venda()
+                venda = self.pega_venda_p_codigo(int(cod_venda))
+                if venda is not None:
+                    cod_refeicao = self.__tela_venda.seleciona_refeicao()
+                    refeicao = self.__controlador_sistema.controlador_refeicao.pega_refeicao_por_codigo(int(cod_refeicao))
+                    if refeicao is not None:
+                        dados_venda = []
+                        venda.refeicoes = refeicao
+                        self.__venda_DAO.update(venda)
+                        dados_venda.append({'codigo': venda.codigo,
+                                                'cliente': venda.cliente.nome,
+                                                'funcionario': venda.funcionario.nome,
+                                                'refeicoes': venda.refeicoes,
+                                                'bebidas': venda.bebidas})
+                        self.__tela_venda.mostra_venda(dados_venda)
+                    else:
+                        raise ItemInexistenteException
+                else:
+                    raise ItemInexistenteException
+            else:
+                raise ListaVaziaException
+        except ItemInexistenteException as e:
+            self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+        except ListaVaziaException as e:
+            self.__tela_venda.mostra_msg(f'Erro: {str(e)}')
+
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()
@@ -217,6 +296,8 @@ class ControladorVendas:
                         7: self.vendas_abertas,
                         8: self.vendas_encerradas,
                         9: self.encerrar_venda,
+                        10: self.adicionar_bebida,
+                        11: self. adicionar_refeicao,
                         0: self.retornar}
         
         continua = True

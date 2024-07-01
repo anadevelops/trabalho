@@ -18,7 +18,7 @@ class ControladorBebida():
 
     def pega_bebida_por_codigo(self, codigo: int):
         for bebida in self.__bebida_DAO.get_all():
-            if(bebida.codigo == codigo):
+            if(bebida.codigo == int(codigo)):
                 return bebida
         return None
 

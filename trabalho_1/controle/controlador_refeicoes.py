@@ -18,7 +18,7 @@ class ControladorRefeicao():
 
     def pega_refeicao_por_codigo(self, codigo: int):
         for refeicao in self.__refeicao_DAO.get_all():
-            if(refeicao.codigo == codigo):
+            if(refeicao.codigo == int(codigo)):
                 return refeicao
         return None
 
