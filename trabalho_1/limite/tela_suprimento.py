@@ -34,7 +34,7 @@ class TelaSuprimento:
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
     def pega_dados_suprimento(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -44,7 +44,7 @@ class TelaSuprimento:
             [sg.Text('Preço:', size=(15, 1)), sg.InputText('', key='preco')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         nome = values['nome']
@@ -72,7 +72,7 @@ class TelaSuprimento:
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona suprimento').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         codigo = int(values['codigo'])

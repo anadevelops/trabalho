@@ -1,4 +1,7 @@
 import PySimpleGUI as sg
+from trabalho_1.excecoes.lista_vazia_exception import ListaVaziaException
+from trabalho_1.excecoes.item_inexistente_exception import ItemInexistenteException
+from trabalho_1.excecoes.dados_invalidos_exception import DadosInvalidosException
 
 
 class TelaVenda:
@@ -56,7 +59,7 @@ class TelaVenda:
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
     def pega_dados_venda(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -68,7 +71,7 @@ class TelaVenda:
             [sg.Text('Bebida:', size=(15, 1)), sg.InputText('', key='bebida')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         cliente = values['cliente']
@@ -77,7 +80,15 @@ class TelaVenda:
         bebida = values['bebida']
 
         self.close()
-        return {"cliente": cliente, "funcionario": funcionario, 'refeicao': refeicao, 'bebida': bebida}
+        try:
+            if ((cliente != '') and
+                (funcionario != '') and
+                (refeicao != '' or bebida != '')):
+                return {"cliente": cliente, "funcionario": funcionario, 'refeicao': refeicao, 'bebida': bebida}
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
 
     def mostra_venda(self, dados_venda):
@@ -104,27 +115,39 @@ class TelaVenda:
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona venda').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         codigo = values['codigo']
         self.close()
-        return codigo
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def seleciona_funcionario(self):
         sg.ChangeLookAndFeel('DarkAmber')
         layout = [
             [sg.Text('-------- SELECIONAR FUNCIONÁRIO ----------', font=("Helvica", 25))],
-            [sg.Text('Digite o CPF do funcionário que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Digite o código do funcionário que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona funcionário').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
-        cpf = values['cpf']
+        codigo = values['codigo']
         self.close()
-        return cpf
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
     
     def seleciona_cliente(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -134,12 +157,18 @@ class TelaVenda:
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona cliente').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         codigo = values['codigo']
         self.close()
-        return codigo
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def seleciona_refeicao(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -149,12 +178,18 @@ class TelaVenda:
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona refeição').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         codigo = values['codigo']
         self.close()
-        return codigo
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def seleciona_bebida(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -164,12 +199,18 @@ class TelaVenda:
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona bebida').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         codigo = values['codigo']
         self.close()
-        return codigo
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def finaliza_venda(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -179,12 +220,18 @@ class TelaVenda:
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Encerra venda').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         codigo = values['codigo']
         self.close()
-        return codigo
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def mostra_msg(self, msg):
         sg.popup("", msg)

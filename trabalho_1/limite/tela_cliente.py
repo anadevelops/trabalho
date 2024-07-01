@@ -20,20 +20,6 @@ class TelaCliente:
             opcao = 0
         self.close()
         return opcao
-        '''
-        print('---------- CLIENTE ----------')
-        print('1 - Criar cliente')
-        print('2 - Atualizar cliente')
-        print('3 - Listar clientes')
-        print('4 - Excluir cliente')
-        print('0 - Retornar')
-
-        try:
-            opcao = int(input('Escolha a opção: '))
-        except ValueError:
-            self.mostra_msg('Formato de entrada está incorreto, reinicie o sistema e tente novamente')
-        else:
-            return opcao'''
 
     def init_opcoes(self):
         # sg.theme_previewer()
@@ -48,7 +34,7 @@ class TelaCliente:
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
     def pega_dados_cliente(self):
         sg.ChangeLookAndFeel('DarkAmber')
@@ -58,7 +44,7 @@ class TelaCliente:
             [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         nome = values['nome']
@@ -84,7 +70,7 @@ class TelaCliente:
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='cpf')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona cliente').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         cpf = values['cpf']

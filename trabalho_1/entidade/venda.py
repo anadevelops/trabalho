@@ -82,3 +82,7 @@ class Venda:
     def bebidas(self, beb):
         if isinstance(beb, Bebida):
             self.__bebidas.append(beb)
+
+    def clear_ref_beb(self):
+        self.__refeicoes.clear()
+        self.__bebidas.clear()

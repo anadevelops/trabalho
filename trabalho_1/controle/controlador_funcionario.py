@@ -132,6 +132,13 @@ class ControladorFuncionario:
             func.num_vendas += 1
             self.__funcionario_DAO.update(func)
 
+    def decrementa_vendas(self, funcionario):
+        func = self.pega_funcionario_p_cod(funcionario.codigo)
+
+        if func is not None:
+            func.num_vendas -= 1
+            self.__funcionario_DAO.update(func)
+
     def retornar(self):
         self.__controlador_sistema.abre_tela()
 

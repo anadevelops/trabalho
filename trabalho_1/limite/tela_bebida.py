@@ -34,12 +34,12 @@ class TelaBebida():
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
   def pega_dados_bebida(self):
         sg.ChangeLookAndFeel('DarkAmber')
         layout = [
-            [sg.Text('---------- DADOS REFEIÇÃO ----------', font=("Helvica", 25))],
+            [sg.Text('---------- DADOS BEBIDA ----------', font=("Helvica", 25))],
             [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
             [sg.Text('Veget:', size=(15, 1)), sg.InputText('', key='veget')],
             [sg.Text('Vegan:', size=(15, 1)), sg.InputText('', key='vegan')],
@@ -50,7 +50,7 @@ class TelaBebida():
             [sg.Text('Grau alcoolico:', size=(15, 1)), sg.InputText('', key='grau_alcoolico')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Sistema de livros').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         nome = values['nome']
@@ -72,7 +72,7 @@ class TelaBebida():
   def mostra_bebida(self, dados_refeicao):
         string_todas_refeicoes = ''
         for dado in dados_refeicao:
-            string_todas_refeicoes = string_todas_refeicoes + 'NOME DA REFEIÇÃO: ' + dado['nome'] + '\n'
+            string_todas_refeicoes = string_todas_refeicoes + 'NOME DA BEBIDA: ' + dado['nome'] + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'VEGET: ' + str(dado['veget']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'VEGAN: ' + str(dado['vegan']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'GLUTEN: ' + str(dado['gluten']) + '\n'
@@ -81,9 +81,9 @@ class TelaBebida():
             #string_todas_refeicoes = string_todas_refeicoes + 'COD INGREDIENTE 2: ' + str(dado['ingrediente2']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'PREÇO DO SUPRIMENTO: ' + str(dado['preco']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'GRAU ALCOOLICO: ' + str(dado['grau_alcoolico']) + '\n'
-            string_todas_refeicoes = string_todas_refeicoes + 'CÓDIGO DA REFEIÇÃO: ' + str(dado['codigo']) + '\n\n'
+            string_todas_refeicoes = string_todas_refeicoes + 'CÓDIGO DA BEBIDA: ' + str(dado['codigo']) + '\n\n'
 
-        sg.Popup('---------- LISTA DE REFEIÇÕES ----------', string_todas_refeicoes)
+        sg.Popup('---------- LISTA DE BEBIDAS ----------', string_todas_refeicoes)
 
     
   def seleciona_bebida(self):
@@ -94,7 +94,7 @@ class TelaBebida():
             [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
-        self.__window = sg.Window('Seleciona bebida').Layout(layout)
+        self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
         codigo = int(values['codigo'])
