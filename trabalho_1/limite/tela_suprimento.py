@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from trabalho_1.excecoes.dados_invalidos_exception import DadosInvalidosException
 
 class TelaSuprimento:
     def __init__(self):
@@ -48,10 +49,16 @@ class TelaSuprimento:
 
         button, values = self.open()
         nome = values['nome']
-        preco = int(values['preco'])
+        preco = values['preco']
 
         self.close()
-        return {"nome": nome, "preco": preco}
+        try:
+            if ((nome != '') and (preco != '')):
+                return {"nome": nome, "preco": preco}
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
 
     def mostra_suprimento(self, dados_suprimento):
@@ -75,9 +82,15 @@ class TelaSuprimento:
         self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
-        codigo = int(values['codigo'])
+        codigo = values['codigo']
         self.close()
-        return codigo
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
     def mostra_msg(self, msg):
         sg.popup("", msg)

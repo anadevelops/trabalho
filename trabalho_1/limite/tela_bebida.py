@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from trabalho_1.excecoes.dados_invalidos_exception import DadosInvalidosException
 
 class TelaBebida():
   def __init__(self):
@@ -58,16 +59,22 @@ class TelaBebida():
         vegan = values['vegan']
         gluten = values['gluten']
         lactose = values['lactose']
-        ingrediente1 = int(values['ingrediente1'])
-        ingrediente2 = int(values['ingrediente2'])
-        grau_alcoolico = float(values['grau_alcoolico'])
+        ingrediente1 = values['ingrediente1']
+        ingrediente2 = values['ingrediente2']
+        grau_alcoolico = values['grau_alcoolico']
 
         self.close()
-        return {"nome": nome, "veget": veget, "vegan": vegan,
+        try:
+            if ((nome != '') and (veget != '') and (vegan != '')
+                and (gluten != '') and (lactose != '') and (ingrediente1 != '') and (ingrediente2 != '')):
+                return {"nome": nome, "veget": veget, "vegan": vegan,
                 "gluten": gluten, "lactose": lactose,
                 "ingrediente1": ingrediente1, "ingrediente2": ingrediente2,
                 "grau_alcoolico": grau_alcoolico}
-
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
   def mostra_bebida(self, dados_refeicao):
         string_todas_refeicoes = ''
@@ -77,8 +84,6 @@ class TelaBebida():
             string_todas_refeicoes = string_todas_refeicoes + 'VEGAN: ' + str(dado['vegan']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'GLUTEN: ' + str(dado['gluten']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'LACTOSE: ' + str(dado['lactose']) + '\n'
-            #string_todas_refeicoes = string_todas_refeicoes + 'COD INGREDIENTE 1: ' + str(dado['ingrediente1']) + '\n'
-            #string_todas_refeicoes = string_todas_refeicoes + 'COD INGREDIENTE 2: ' + str(dado['ingrediente2']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'PREÇO DO SUPRIMENTO: ' + str(dado['preco']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'GRAU ALCOOLICO: ' + str(dado['grau_alcoolico']) + '\n'
             string_todas_refeicoes = string_todas_refeicoes + 'CÓDIGO DA BEBIDA: ' + str(dado['codigo']) + '\n\n'
@@ -97,9 +102,15 @@ class TelaBebida():
         self.__window = sg.Window('Sistema RestBAR 1.0').Layout(layout)
 
         button, values = self.open()
-        codigo = int(values['codigo'])
+        codigo = values['codigo']
         self.close()
-        return codigo
+        try:
+            if (codigo != ''):
+                return codigo
+            raise DadosInvalidosException
+        except DadosInvalidosException as e:
+            self.mostra_msg(f'Erro: {str(e)}')
+            return False
 
   def mostra_msg(self, msg):
         sg.popup("", msg)
