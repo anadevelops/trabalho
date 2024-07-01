@@ -28,22 +28,20 @@ class ControladorVendas:
 
     def incluir_venda(self):
         try:
-            self.__controlador_sistema.controlador_funcionario.lista_funcionarios()
             self.__controlador_sistema.controlador_cliente.lista_clientes()
-            self.__controlador_sistema.controlador_bebida.lista_bebida()
+            self.__controlador_sistema.controlador_funcionario.lista_funcionarios()
             self.__controlador_sistema.controlador_refeicao.lista_refeicao()
+            self.__controlador_sistema.controlador_bebida.lista_bebida()
             dados_venda = self.__tela_venda.pega_dados_venda()
 
             cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(dados_venda['cliente'])
-            funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(dados_venda['funcionario'])
-            print(funcionario)
+            funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cod(dados_venda['funcionario'])
             refeicao = self.__controlador_sistema.controlador_refeicao.pega_refeicao_por_codigo(dados_venda['refeicao'])
             bebida = self.__controlador_sistema.controlador_bebida.pega_bebida_por_codigo(dados_venda['bebida'])
             if (cliente is not None and funcionario is not None and (refeicao is not None or bebida is not None)):
                 venda = Venda(cliente, funcionario, refeicao, bebida)
                 venda.codigo = random.randint(1, 1000)
                 self.__controlador_sistema.controlador_funcionario.incrementa_vendas(funcionario)
-                print(funcionario.num_vendas)
                 self.__venda_DAO.add(venda)
                 self.__tela_venda.mostra_msg('Venda criada')
             else:
@@ -77,10 +75,10 @@ class ControladorVendas:
 
                 if venda is not None:
                     novos_dados_venda = self.__tela_venda.pega_dados_venda()
-                    venda.cliente = novos_dados_venda['cliente']
-                    venda.funcionario = novos_dados_venda['funcionario']
-                    venda.refeicoes = novos_dados_venda['refeicao']
-                    venda.bebidas = novos_dados_venda['bebida']
+                    venda.cliente = self.__controlador_sistema.controlador_cliente.pega_cliente_p_cod(novos_dados_venda['cliente'])
+                    venda.funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cod(novos_dados_venda['funcionario'])
+                    venda.refeicoes[0] = self.__controlador_sistema.controlador_refeicao.pega_refeicao_por_codigo(novos_dados_venda['refeicao'])
+                    venda.bebidas[0] = self.__controlador_sistema.controlador_bebida.pega_bebida_por_codigo(novos_dados_venda['bebida'])
                     self.__venda_DAO.update(venda)
                     self.__tela_venda.mostra_msg('Venda alterada')
                     self.lista_vendas()
@@ -142,12 +140,12 @@ class ControladorVendas:
     def vendas_p_funcionario(self):
         try:
             if self.__controlador_sistema.controlador_funcionario.lista_funcionarios():
-                cpf_func = self.__tela_venda.seleciona_funcionario()
-                funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cpf(cpf_func)
+                cod_func = self.__tela_venda.seleciona_funcionario()
+                funcionario = self.__controlador_sistema.controlador_funcionario.pega_funcionario_p_cod(cod_func)
                 if funcionario is not None:
                     vendas_func = []
                     for venda in self.__venda_DAO.get_all():
-                        if venda.funcionario.cpf == funcionario.cpf:
+                        if venda.funcionario.codigo == funcionario.codigo:
                             vendas_func.append({'codigo': venda.codigo,
                                                             'cliente': venda.cliente.nome,
                                                             'funcionario': venda.funcionario.nome,

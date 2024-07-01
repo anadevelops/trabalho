@@ -25,7 +25,7 @@ class TelaFuncionario:
     def init_opcoes(self):
         sg.ChangeLookAndFeel('DarkAmber')
         layout = [
-            [sg.Text('-------- FUNCIONARIO ----------', font=("Helvica", 25))],
+            [sg.Text('-------- FUNCIONÁRIO ----------', font=("Helvica", 25))],
             [sg.Text('Escolha sua opção', font=("Helvica", 15))],
             [sg.Radio('Incluir Funcionário', "RD1", key='1')],
             [sg.Radio('Alterar Funcionário', "RD1", key='2')],
@@ -93,11 +93,11 @@ class TelaFuncionario:
 
         self.close()
         return {'nome': nome,
-                'funcao': funcao,
-                'salario': salario,
-                'rua': rua,
-                'bairro': bairro,
-                'cidade': cidade}
+                        'funcao': funcao,
+                        'salario': salario,
+                        'rua': rua,
+                        'bairro': bairro,
+                        'cidade': cidade}
 
     def mostra_funcionario(self, dados_funcionario):
         string_todos_funcionarios = ''

@@ -10,7 +10,7 @@ class FuncionarioDAO(DAO):
             super().add(funcionario.codigo, funcionario)
 
     def update(self, funcionario: Funcionario):
-        if (funcionario is not None) and (isinstance(funcionario, Funcionario) and (isinstance(funcionario.codigo, int))):
+        if (funcionario is not None) and (isinstance(funcionario, Funcionario)):
             super().update(funcionario.codigo, funcionario)
 
     def get(self, key: int):

@@ -88,10 +88,11 @@ class ControladorFuncionario:
                 if func is not None:
                     novos_dados_func = self.__tela_funcionario.pega_dados_funcionario_att()
                     func.nome = novos_dados_func['nome']
-                    func.salario = novos_dados_func['salario']
-                    func.rua = novos_dados_func['rua']
-                    func.bairro = novos_dados_func['bairro']
-                    func.cidade = novos_dados_func['cidade']
+                    func.funcao = novos_dados_func['funcao']
+                    func.salario = float(novos_dados_func['salario'])
+                    func.endereco.rua = novos_dados_func['rua']
+                    func.endereco.bairro = novos_dados_func['bairro']
+                    func.endereco.cidade = novos_dados_func['cidade']
                     self.__funcionario_DAO.update(func)
                     self.__tela_funcionario.mostra_msg('Funcionário alterado.')
                     self.lista_funcionarios()
@@ -103,6 +104,8 @@ class ControladorFuncionario:
             self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
         except ListaVaziaException as e:
             self.__tela_funcionario.mostra_msg(f'Erro: {str(e)}')
+        except ValueError:
+            self.__tela_funcionario.mostra_msg('Erro: Dado em formato incorreto foi inserido. Tente novamente')
 
     def del_funcionario(self):
         try:

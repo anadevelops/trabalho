@@ -19,7 +19,7 @@ class Endereco:
     @rua.setter
     def rua(self, rua):
         self.__rua = rua
-    
+
     @bairro.setter
     def bairro(self, bairro):
         self.__bairro = bairro
